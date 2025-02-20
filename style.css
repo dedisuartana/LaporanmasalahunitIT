@@ -5,6 +5,14 @@
     box-sizing: border-box;
 }
 
+/* Style the logo */
+.logo {
+    width: 50px; /* Adjust based on your logo size */
+    height: auto; 
+    vertical-align: middle; /* Ensures the logo aligns with the text */
+    margin-right: 20px; /* Space between the logo and title */
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #ffffff;
@@ -13,14 +21,17 @@ body {
 }
 
 header {
-    background-color: #001833;
-    color: #fff;
+    background-color: #4CAF50;
+    color: white;
+    text-align: left;
     padding: 20px;
-    text-align: center;
+    display: flex;
+    align-items: center;
 }
 
 header h1 {
-    font-size: 2rem;
+    margin: 0;
+    font-size: 24px;
     font-weight: 600;
 }
 
