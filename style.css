@@ -1,0 +1,137 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #001833;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+main {
+    padding: 20px;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.filter-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.filter-section select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.report-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.report-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.report-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #4a90e2;
+}
+
+.report-card p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.report-card button {
+    padding: 10px 20px;
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.report-card button:hover {
+    background-color: #357abd;
+}
+
+.status {
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.status.pending {
+    background-color: #ffcccb;
+    color: #d9534f;
+}
+
+.status.resolved {
+    background-color: #c8e6c9;
+    color: #4caf50;
+}
+
+.status.in-progress {
+    background-color: #fff3cd;
+    color: #ffc107;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .report-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .report-container {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+}

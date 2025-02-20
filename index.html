@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Laporan IT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Dashboard Laporan IT</h1>
+    </header>
+
+    <main>
+        <section class="filter-section">
+            <h2>Pilih Jenis Laporan</h2>
+            <select id="reportType">
+                <option value="all">Semua Laporan</option>
+                <option value="hardware">Laporan Hardware</option>
+                <option value="software">Laporan Software</option>
+                <option value="network">Laporan Jaringan</option>
+                <option value="security">Laporan Keamanan</option>
+            </select>
+        </section>
+
+        <section class="report-container">
+            <div class="report-card hardware">
+                <h3>Laporan Data Unit</h3>
+                <p>Mengisi Laporan Terkait Kendala Yang di Alami</p>
+                <p><button style="align-items: center;">Masuk</button></p>
+            </div>
+
+            <div class="report-card software">
+                <h3>Laporan Software</h3>
+                <p>Masalah: Aplikasi error saat startup</p>
+                <p>Status: <span class="status resolved">Resolved</span></p>
+            </div>
+
+            <div class="report-card network">
+                <h3>Laporan Jaringan</h3>
+                <p>Masalah: Koneksi internet lambat</p>
+                <p>Status: <span class="status in-progress">In Progress</span></p>
+            </div>
+
+            <div class="report-card security">
+                <h3>Laporan Keamanan</h3>
+                <p>Masalah: Ancaman malware terdeteksi</p>
+                <p>Status: <span class="status pending">Pending</span></p>
+            </div>
+        </section>
+    </main>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
