@@ -241,6 +241,9 @@
         .software {
             border-top: 3px solid var(--success);
         }
+       .report {
+            border-top: 3px solid var(--success);
+        }
         
         .binary-decoration {
             display: none; /* Disembunyikan di mobile */
