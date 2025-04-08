@@ -16,3 +16,6 @@ document.querySelector('.report-card.hardware button').addEventListener('click',
 document.querySelector('.report-card.software button').addEventListener('click', function () {
     window.location.href = 'https://docs.google.com/spreadsheets/d/16964zopoGN7ExkqRJeMpgss8rw2oD7smyKOvrJR-rmI/edit?usp=sharing'; // Ganti dengan halaman tujuan
 });
+document.querySelector('.report-card.report button').addEventListener('click', function () {
+    window.location.href = 'http://192.168.75.3:2500/system/report'; // Ganti dengan halaman tujuan
+});
