@@ -159,10 +159,6 @@
             font-weight: 600;
         }
         
-        .user-profile {
-            display: flex;
-            align-items: center;
-        }
         
         .user-profile {
         position: relative;
