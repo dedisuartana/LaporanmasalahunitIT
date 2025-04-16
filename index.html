@@ -9,42 +9,86 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <img src="logo.png" alt="Logo" class="logo">
-        <h1>Dashboard IT HM Karangasem</h1>
-    </header>
-
-    <main>
-        <section class="filter-section">
-            <h2>Pilih Jenis Laporan</h2>
-            <select id="reportType">
-                <option value="all">Semua Laporan</option>
-                <option value="hardware">Laporan Data Unit</option>
-                <option value="software">Laporan Permintaan Barang IT</option>
-                <option value="report">Laporan Pencapaian Antrol / MJKN</option>
-            </select>
-        </section>
-
-        <section class="report-container">
-            <div class="report-card hardware">
-                <h3>Laporan Data Unit</h3>
-                <p>Mengisi Laporan Terkait Kendala Yang di Alami</p>
-                <p><button style="align-items: center;">Masuk</button></p>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div style="display: flex; align-items: center;">
+                    <img src="logo.png" alt="Logo" class="logo">
+                    <span class="logo-text">IT Dashboard</span>
+                </div>
+                <button class="toggle-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active">
+                    <i class="fas fa-tachometer-alt menu-icon"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-desktop menu-icon"></i>
+                    <span class="menu-text">Data Unit</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-boxes menu-icon"></i>
+                    <span class="menu-text">Permintaan Barang</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-chart-line menu-icon"></i>
+                    <span class="menu-text">Laporan Antrol</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog menu-icon"></i>
+                    <span class="menu-text">Pengaturan</span>
+                </a>
+            </nav>
+        </aside>
 
-            <div class="report-card software">
-                <h3>Laporan permintaan Barang IT</h3>
-                <p>Mengisi Ketersediaan Barang/Perlengkapan Penunjang IT</p>
-                <p><button style="align-items: center;">Masuk</button></p>
-            </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <div class="header-title">Dashboard IT HM Karangasem</div>
+                <div class="user-profile">
+                    <div class="user-avatar">AD</div>
+                    <span>Admin</span>
+                </div>
+            </header>
 
-            <div class="report-card report">
-                <h3>Laporan Antrol & MJKN</h3>
-                <p>Pencapaian  Antrian Online & MJKN HM Karangasem</p>
-                <p><button style="align-items: center;">Masuk</button></p>
-            </div>
+            <main>
+                <section class="filter-section">
+                    <h2>Pilih Jenis Laporan</h2>
+                    <select id="reportType">
+                        <option value="all">Semua Laporan</option>
+                        <option value="hardware">Laporan Data Unit</option>
+                        <option value="software">Laporan Permintaan Barang IT</option>
+                        <option value="report">Laporan Pencapaian Antrol / MJKN</option>
+                    </select>
+                </section>
 
-        </section>
+                <section class="report-container">
+                    <div class="report-card hardware">
+                        <h3>Laporan Data Unit</h3>
+                        <p>Mengisi Laporan Terkait Kendala Yang di Alami</p>
+                        <button>Masuk <i class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <div class="report-card software">
+                        <h3>Laporan Permintaan Barang IT</h3>
+                        <p>Mengisi Ketersediaan Barang/Perlengkapan Penunjang IT</p>
+                        <button>Masuk <i class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <div class="report-card report">
+                        <h3>Laporan Antrol & MJKN</h3>
+                        <p>Pencapaian Antrian Online & MJKN HM Karangasem</p>
+                        <button>Masuk <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
     </main>
     <script src="scripts.js"></script>
 </body>
