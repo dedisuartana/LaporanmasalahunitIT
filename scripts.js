@@ -1,4 +1,21 @@
-  document.addEventListener('DOMContentLoaded', function() {
+ // Mobile menu toggle
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // On mobile, close sidebar after selection
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.add('sidebar-collapsed');
+                        logo.classList.add('logo-collapsed');
+                        toggleBtn.innerHTML = '<i class="fas fa-indent"></i>';
+                    }
+                });
+            });
+        });
+
+document.addEventListener('DOMContentLoaded', function() {
             // Toggle Sidebar
             const toggleBtn = document.querySelector('.toggle-btn');
             const sidebar = document.querySelector('.sidebar');
