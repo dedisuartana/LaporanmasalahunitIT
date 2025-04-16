@@ -11,15 +11,46 @@
             max-width: 100%;
             height: auto;
         }
+
+         /* Button Styles */
+    .button-container {
+        margin-top: 20px;
+    }
+    
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .back-button:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .back-button:active {
+        transform: translateY(0);
+    }
+    
+    .back-button i {
+        margin-right: 8px;
+    }
     </style>
 </head>
 <body>
     <img src="kocak.png" alt="big" class="img">
-    <div>
-        <button>
-            <a href="index.html">
-                kembali   
-        </button>
+    <div class="button-container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
     </div>
 </body>
 </html>
