@@ -183,26 +183,28 @@
 }
 
 
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .user-avatar {
-    width: 60px;           /* Atur ukuran sesuai kebutuhan */
+    width: 60px;
     height: 60px;
-    border-radius: 50%;    /* Bikin bulat */
-    overflow: hidden;      /* Supaya gambar nggak keluar dari lingkaran */
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0; /* Optional: background jika gambar gagal */
 }
 
 .user-avatar img {
     width: 100%;
     height: 100%;
-    object-fit: cover;     /* Biar gambar nggak gepeng, tapi tetap isi lingkaran */
+    object-fit: cover;
     display: block;
-}
-
-.user-avatar:hover {
-    transform: scale(1.1);
 }
     
         main {
