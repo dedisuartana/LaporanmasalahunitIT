@@ -179,16 +179,27 @@
         background-color: rgba(0, 0, 0, 0.05);
     }
 
+.user-avatar-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
 .user-avatar {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        overflow: hidden;
-        background-color: #f0f0f0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.1);
+}
     
         .user-avatar img {
         width: 100%;
