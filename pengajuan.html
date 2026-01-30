@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permintaan Barang - IT Support</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- STYLE CSS --- */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e293b;
+            --bg-color: #f1f5f9;
+            --text-color: #334155;
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --sidebar-width: 260px;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-decoration: none; }
+        body { background-color: var(--bg-color); color: var(--text-color); }
+
+        /* Layout & Sidebar */
+        .app-container { display: flex; min-height: 100vh; }
+        .sidebar { width: var(--sidebar-width); background-color: var(--secondary-color); color: white; position: fixed; height: 100vh; left: 0; top: 0; transition: var(--transition); z-index: 100; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { width: 35px; height: 35px; background: white; border-radius: 8px; object-fit: cover; }
+        .logo-text { font-weight: 600; font-size: 1.1rem; margin-left: 10px; }
+        .sidebar-menu { padding: 20px 0; flex: 1; }
+        .menu-item { display: flex; align-items: center; padding: 12px 25px; color: #94a3b8; transition: var(--transition); border-left: 3px solid transparent; }
+        .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.05); color: white; border-left-color: var(--primary-color); }
+        .menu-icon { width: 25px; font-size: 1.1rem; margin-right: 10px; }
+        
+        .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; }
+        header { background-color: var(--card-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 90; }
+        .toggle-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; }
+        .user-profile { display: flex; align-items: center; gap: 12px; }
+        .user-avatar img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
+
+        /* --- STYLING HALAMAN --- */
+        main { padding: 30px; }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .form-header h2 { font-size: 1.3rem; margin-bottom: 5px; color: var(--secondary-color); }
+        .form-header p { color: #64748b; font-size: 0.9rem; margin-bottom: 25px; }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group { margin-bottom: 5px; }
+        .form-group.full-width { grid-column: span 2; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background-color: #f8fafc;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea.form-control { resize: vertical; min-height: 100px; }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover { background-color: #1d4ed8; transform: translateY(-2px); }
+
+        /* Table Section */
+        .table-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .table-header { padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .table-header h3 { font-size: 1.1rem; color: var(--secondary-color); }
+        .table-responsive { overflow-x: auto; width: 100%; }
+        .custom-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        .custom-table th, .custom-table td { padding: 15px 20px; text-align: left; border-bottom: 1px solid #f1f5f9; }
+        .custom-table th { background-color: #f8fafc; font-weight: 600; color: #64748b; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .custom-table tr:hover { background-color: #f8fafc; }
+
+        /* Badges */
+        .badge { padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+        .badge.urgent { background-color: #fee2e2; color: #991b1b; }
+        .badge.normal { background-color: #e0f2fe; color: #075985; }
+        .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+        .status.approved { color: #166534; }
+        .status.approved .status-dot { background-color: #166534; }
+        .status.pending { color: #b45309; }
+        .status.pending .status-dot { background-color: #f59e0b; }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .toggle-btn { display: block; }
+            .form-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div style="display: flex; align-items: center;">
+                    <img src="logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/35'">
+                    <span class="logo-text">IT Dashboard</span>
+                </div>
+                <button class="toggle-btn" onclick="toggleSidebar()" style="color: white; display: none;" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-tachometer-alt menu-icon"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="dataunit.html" class="menu-item">
+                    <i class="fas fa-desktop menu-icon"></i>
+                    <span class="menu-text">Data Unit</span>
+                </a>
+                <a href="pengajuan.html" class="menu-item active">
+                    <i class="fas fa-boxes menu-icon"></i>
+                    <span class="menu-text">Permintaan Barang</span>
+                </a>
+                <a href="utility.html" class="menu-item">
+                    <i class="fas fa-tools menu-icon"></i>
+                    <span class="menu-text">Utility IT</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog menu-icon"></i>
+                    <span class="menu-text">Pengaturan</span>
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="toggle-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h3 style="margin:0; color: #334155;">Pengadaan IT</h3>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="dedi.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <section class="form-card">
+                    <div class="form-header">
+                        <h2>Buat Pengajuan Baru</h2>
+                        <p>Silakan isi form di bawah ini. Data akan otomatis diarahkan ke WhatsApp.</p>
+                    </div>
+                    
+                    <form onsubmit="kirimKeWhatsApp(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="itemName">Nama Barang / Spesifikasi</label>
+                                <input type="text" id="itemName" class="form-control" placeholder="Contoh: Kertas A4" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category">Kategori</label>
+                                <select id="category" class="form-control">
+                                    <option value="hardware">Hardware / Sparepart</option>
+                                    <option value="consumable">Consumable (Tinta/Kertas)</option>
+                                    <option value="network">Alat Medis</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="quantity">Jumlah</label>
+                                <input type="number" id="quantity" class="form-control" placeholder="0" min="1" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="urgency">Tingkat Urgensi</label>
+                                <select id="urgency" class="form-control">
+                                    <option value="normal">Normal</option>
+                                    <option value="high">Mendesak (High)</option>
+                                    <option value="critical">Critical (Operasional Berhenti)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dateNeeded">Dibutuhkan Tanggal</label>
+                                <input type="date" id="dateNeeded" class="form-control" required>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="reason">Alasan Permintaan / Keterangan</label>
+                                <textarea id="reason" class="form-control" placeholder="Jelaskan kenapa barang ini dibutuhkan..."></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane"></i> Kirim Pengajuan
+                        </button>
+                    </form>
+                </section>
+
+                <section class="table-section">
+                    <div class="table-header">
+                        <h3>Riwayat Pengajuan Terakhir</h3>
+                        <button style="border:none; background:none; color: var(--primary-color); cursor:pointer;">Lihat Semua</button>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah</th>
+                                    <th>Urgensi</th>
+                                    <th>Status Approval</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>29 Jan 2026</td>
+                                    <td>Mobil Lamborgini</td>
+                                    <td>1 Unit</td>
+                                    <td><span class="badge urgent">Butuh</span></td>
+                                    <td>
+                                        <span class="status cancel"><span class="status-dot"></span>ditolak</span>
+                                    </td>
+                                    <td><a href="#" style="color: #64748b;"><i class="fas fa-ellipsis-v"></i></a></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // 1. Fungsi Sidebar (Mobile)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+            const closeBtn = document.getElementById('closeSidebar');
+            if (window.innerWidth <= 768) {
+                closeBtn.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+            }
+        }
+
+        // 2. Fungsi Kirim ke WhatsApp
+        function kirimKeWhatsApp(event) {
+            event.preventDefault(); // Mencegah reload halaman
+
+            // Ambil data dari form
+            const itemName = document.getElementById('itemName').value;
+            const categorySelect = document.getElementById('category');
+            const category = categorySelect.options[categorySelect.selectedIndex].text;
+            const quantity = document.getElementById('quantity').value;
+            const price = document.getElementById('price').value || "-";
+            const urgencySelect = document.getElementById('urgency');
+            const urgency = urgencySelect.options[urgencySelect.selectedIndex].text;
+            const dateNeeded = document.getElementById('dateNeeded').value;
+            const reason = document.getElementById('reason').value;
+
+            // --- GANTI NOMOR DI SINI ---
+            const nomorTujuan = "6285858369212"; 
+            // ---------------------------
+
+            // Buat template pesan
+            let message = `*PERMINTAAN BARANG BARU*\n`;
+            message += `----------------------------------\n`;
+            message += `📦 *Barang:* ${itemName}\n`;
+            message += `📂 *Kategori:* ${category}\n`;
+            message += `🔢 *Jumlah:* ${quantity} Pcs\n`;
+            message += `🚨 *Urgensi:* ${urgency}\n`;
+            message += `📅 *Tgl Pakai:* ${dateNeeded}\n`;
+            message += `📝 *Alasan:* ${reason}\n`;
+            message += `----------------------------------\n`;
+            message += `_Dikirim via Dashboard IT Support_`;
+
+            // Encode pesan dan buka WA
+            const encodedMessage = encodeURIComponent(message);
+            const waUrl = `https://wa.me/${nomorTujuan}?text=${encodedMessage}`;
+            
+            window.open(waUrl, '_blank');
+        }
+    </script>
+</body>
+</html>

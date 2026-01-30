@@ -1,24 +1,305 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Laporan IT</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Dashboard Laporan IT - Hasna Medika</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --primary-color: #2563eb; /* Biru Modern */
+            --secondary-color: #1e293b; /* Dark Blue untuk Sidebar */
+            --bg-color: #f1f5f9; /* Abu-abu sangat muda untuk background */
+            --text-color: #334155;
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --sidebar-width: 260px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- LAYOUT UTAMA --- */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--secondary-color);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            transition: var(--transition);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 35px;
+            height: 35px;
+            background: white; /* Placeholder jika logo transparan */
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            color: #94a3b8;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(255,255,255,0.05);
+            color: white;
+            border-left-color: var(--primary-color);
+        }
+
+        .menu-icon {
+            width: 25px;
+            font-size: 1.1rem;
+            margin-right: 10px;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--card-bg);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-color);
+            display: none; /* Hidden on desktop by default */
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .user-avatar img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .user-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* --- DASHBOARD CONTENT --- */
+        main {
+            padding: 30px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-section h2 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        select#reportType {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background-color: white;
+            font-size: 0.95rem;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Cards Grid */
+        .report-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .report-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Warna khusus untuk tiap jenis kartu */
+        .report-card.hardware { border-top-color: var(--danger); }
+        .report-card.software { border-top-color: var(--primary-color); }
+        .report-card.report { border-top-color: var(--success); }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .report-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .report-card p {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .card-icon-bg {
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            font-size: 5rem;
+            opacity: 0.05;
+            color: var(--text-color);
+        }
+
+        .btn-card {
+            align-self: flex-start;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            background-color: #f1f5f9;
+            color: var(--text-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-card:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .toggle-btn {
+                display: block;
+            }
+            
+            .header-title {
+                display: none; /* Hide empty title on mobile to save space */
+            }
+        }
+    </style>
 </head>
 <body>
+
     <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div style="display: flex; align-items: center;">
-                    <img src="logo.png" alt="Logo" class="logo">
+                <div class="brand-wrapper">
+                    <img src="logo.png" alt="IT" class="logo" onerror="this.src='https://via.placeholder.com/35'">
                     <span class="logo-text">IT Dashboard</span>
                 </div>
-                <button class="toggle-btn">
-                    <i class="fas fa-bars"></i>
+                <button class="toggle-btn" onclick="toggleSidebar()" style="color: white; display: none;" id="closeSidebar">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
             
@@ -27,17 +308,17 @@
                     <i class="fas fa-tachometer-alt menu-icon"></i>
                     <span class="menu-text">Dashboard</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="dataunit.html" class="menu-item">
                     <i class="fas fa-desktop menu-icon"></i>
                     <span class="menu-text">Data Unit</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="pengajuan.html" class="menu-item">
                     <i class="fas fa-boxes menu-icon"></i>
                     <span class="menu-text">Permintaan Barang</span>
                 </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-chart-line menu-icon"></i>
-                    <span class="menu-text">Laporan Antrol</span>
+                <a href="utility.html" class="menu-item">
+                    <i class="fas fa-tools menu-icon"></i>
+                    <span class="menu-text">Utility IT</span>
                 </a>
                 <a href="#" class="menu-item">
                     <i class="fas fa-cog menu-icon"></i>
@@ -46,52 +327,72 @@
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <div class="main-content">
             <header>
-                <div class="header-title"></div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="toggle-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="header-title">
+                        <h4 style="margin:0; color: #64748b;">Welcome, Brother Peace✌</h4>
+                    </div>
+                </div>
+
                 <div class="user-profile">
                     <div class="user-avatar">
-                        <img src="dedi.jpg.jpg" alt="Admin Avatar" onerror="this.src='default-avatar.png'">
+                        <img src="dedi.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
                     </div>
-                    <span>Deddy</span>
+                    <span class="user-name">Dedi Suartana</span>
                 </div>
             </header>
 
             <main>
                 <section class="filter-section">
-                    <h2>Pilih Jenis Laporan</h2>
-                    <select id="reportType">
-                        <option value="all">Semua Laporan</option>
+                    <h2>Overview Laporan</h2>
+                    <select id="reportType" onchange="filterReports()">
+                        <option value="all">Tampilkan Semua</option>
                         <option value="hardware">Laporan Data Unit</option>
                         <option value="software">Laporan Permintaan Barang IT</option>
                         <option value="report">Laporan Pencapaian Antrol / MJKN</option>
                     </select>
                 </section>
 
-                <section class="report-container">
-                    <div class="report-card hardware">
-                        <h3>Laporan Data Unit</h3>
-                        <p>Mengisi Laporan Terkait Kendala Yang di Alami</p>
-                        <button>Masuk <i class="fas fa-arrow-right"></i></button>
+                <section class="report-container" id="reportContainer">
+                    
+                    <div class="report-card hardware" data-category="hardware">
+                        <i class="fas fa-desktop card-icon-bg"></i>
+                        <div>
+                            <h3>Laporan Data Unit</h3>
+                            <p>Monitoring kerusakan hardware, PC, Printer, dan jaringan.</p>
+                        </div>
+                        <button class="btn-card" onclick="window.location.href='dataunit.html'">Input Laporan <i class="fas fa-arrow-right"></i></button>
                     </div>
 
-                    <div class="report-card software">
-                        <h3>Laporan Permintaan Barang IT</h3>
-                        <p>Barang/Perlengkapan Penunjang IT</p>
-                        <button>Masuk <i class="fas fa-arrow-right"></i></button>
+                    <div class="report-card software" data-category="software">
+                        <i class="fas fa-memory card-icon-bg"></i>
+                        <div>
+                            <h3>Permintaan Barang IT</h3>
+                            <p>Form pengajuan pengadaan sparepart atau perlengkapan IT baru.</p>
+                        </div>
+                        <button class="btn-card" onclick="window.location.href='pengajuan.html'">Buat Pengajuan <i class="fas fa-arrow-right"></i></button>
                     </div>
 
-                    <div class="report-card report">
-                        <h3>Laporan Antrol & MJKN</h3>
-                        <p>Pencapaian Antrian Online & MJKN HM Karangasem</p>
-                        <button>Masuk <i class="fas fa-arrow-right"></i></button>
+                    <div class="report-card report" data-category="report">
+                        <i class="fas fa-chart-pie card-icon-bg"></i>
+                        <div>
+                            <h3>Utility IT</h3>
+                            <p>Data utility dan repository IT.</p>
+                        </div>
+                        <button class="btn-card" onclick="window.location.href='utility.html'">Lihat Data <i class="fas fa-arrow-right"></i></button>
                     </div>
+
                 </section>
             </main>
         </div>
     </div>
-    </main>
+
     <script src="scripts.js"></script>
+      
+    </script>
 </body>
 </html>

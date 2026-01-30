@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Unit - IT HM Karangasem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- COPY STYLE DARI INDEX (Agar Konsisten) --- */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e293b;
+            --bg-color: #f1f5f9;
+            --text-color: #334155;
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --sidebar-width: 260px;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-decoration: none; }
+        body { background-color: var(--bg-color); color: var(--text-color); }
+
+        /* Layout & Sidebar (Sama persis dengan index.html) */
+        .app-container { display: flex; min-height: 100vh; }
+        .sidebar { width: var(--sidebar-width); background-color: var(--secondary-color); color: white; position: fixed; height: 100vh; left: 0; top: 0; transition: var(--transition); z-index: 100; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { width: 35px; height: 35px; background: white; border-radius: 8px; object-fit: cover; }
+        .logo-text { font-weight: 600; font-size: 1.1rem; margin-left: 10px; }
+        .sidebar-menu { padding: 20px 0; flex: 1; }
+        .menu-item { display: flex; align-items: center; padding: 12px 25px; color: #94a3b8; transition: var(--transition); border-left: 3px solid transparent; }
+        .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.05); color: white; border-left-color: var(--primary-color); }
+        .menu-icon { width: 25px; font-size: 1.1rem; margin-right: 10px; }
+        
+        /* Main Content Wrapper */
+        .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; }
+        header { background-color: var(--card-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 90; }
+        .toggle-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; }
+        .user-profile { display: flex; align-items: center; gap: 12px; }
+        .user-avatar img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
+
+        /* --- STYLING KHUSUS HALAMAN DATA UNIT --- */
+        main { padding: 30px; }
+
+        /* Toolbar (Search & Add Button) */
+        .action-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .btn-add {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-add:hover { background-color: #1d4ed8; transform: translateY(-2px); }
+
+        /* Grid System untuk Card List */
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /* Card Style Ticket */
+        .unit-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border: 1px solid #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .unit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .device-info h4 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .device-id {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-family: 'Roboto Mono', monospace;
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-done { background: #dcfce7; color: #166534; }
+        .status-process { background: #fef3c7; color: #b45309; }
+        .status-pending { background: #fee2e2; color: #991b1b; }
+
+        .card-body p {
+            font-size: 0.95rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .reporter-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-links a {
+            color: var(--primary-color);
+            margin-left: 10px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .action-links a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .toggle-btn { display: block; }
+            .action-toolbar { flex-direction: column; align-items: stretch; }
+            .search-box { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div style="display: flex; align-items: center;">
+                    <img src="logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/35'">
+                    <span class="logo-text">IT Dashboard</span>
+                </div>
+                <button class="toggle-btn" onclick="toggleSidebar()" style="color: white; display: none;" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-tachometer-alt menu-icon"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="dataunit.html" class="menu-item active">
+                    <i class="fas fa-desktop menu-icon"></i>
+                    <span class="menu-text">Data Unit</span>
+                </a>
+                <a href="pengajuan.html" class="menu-item">
+                    <i class="fas fa-boxes menu-icon"></i>
+                    <span class="menu-text">Permintaan Barang</span>
+                </a>
+                <a href="utility.html" class="menu-item">
+                    <i class="fas fa-tools menu-icon"></i>
+                    <span class="menu-text">Utility IT</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog menu-icon"></i>
+                    <span class="menu-text">Pengaturan</span>
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="toggle-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h3 style="margin:0; color: #334155;">Laporan Data Unit</h3>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="dedi.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <section class="action-toolbar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" onkeyup="searchCards()" placeholder="Cari Unit, Ruangan, atau Kendala...">
+                    </div>
+                    <button class="btn-add">
+                        <i class="fas fa-plus"></i> Tambah Laporan
+                    </button>
+                </section>
+
+                <section class="unit-grid" id="cardContainer">
+                    
+                    <div class="unit-card">
+                        <div class="card-header">
+                            <div class="device-info">
+                                <h4>Laporan Data Unit Tahun 2024</h4>
+                                <span class="device-id">ID: 001</span>
+                            </div>
+                            <span class="status-badge status-done">Selesai</span>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>About:</strong> Laporan data unit untuk tahun 2024 yang mencakup seluruh unit di Klinik Hasna Medika.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="reporter-info">
+                                <i class="far fa-calendar-alt"></i> Maret - Desember 2024
+                            </div>
+                            <div class="action-links">
+                                <a href="https://docs.google.com/spreadsheets/d/1raV7GICONMX05pS_YqCXDL4_EFiP84FaPI3eJeYiKxE/edit?gid=203598211#gid=203598211">Detail</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unit-card">
+                        <div class="card-header">
+                            <div class="device-info">
+                                <h4>Laporan Data Unit Tahun 2025</h4>
+                                <span class="device-id">ID: 002</span>
+                            </div>
+                            <span class="status-badge status-done">Selesai</span>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>About:</strong> Laporan data unit untuk tahun 2025 yang mencakup seluruh unit di Klinik Hasna Medika.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="reporter-info">
+                                <i class="far fa-calendar-alt"></i> Januari - Desember 2025
+                            </div>
+                            <div class="action-links">
+                                <a href="https://docs.google.com/spreadsheets/d/19FCKjhrsuxiTd-2U_yPqr9rG_Hs35sBy4K1fMTQbgCU/edit?usp=sharing">Detail</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unit-card">
+                        <div class="card-header">
+                            <div class="device-info">
+                                <h4>Laporan Data Unit Tahun 2026</h4>
+                                <span class="device-id">ID: 003</span>
+                            </div>
+                            <span class="status-badge status-process">Process</span>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>About:</strong> Laporan data unit untuk tahun 2026 yang mencakup seluruh unit di Klinik Hasna Medika.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="reporter-info">
+                                <i class="far fa-calendar-alt"></i> Januari - Desember 2026
+                            </div>
+                            <div class="action-links">
+                                <a href="https://docs.google.com/spreadsheets/d/1LaSgNxCTFuuSCTDvFSUbvNl9lyN1smNXrV9oPF-QD3o/edit?usp=sharing">Detail</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="scripts.js">
+       
+    </script>
+</body>
+</html>
