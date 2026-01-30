@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- COPY STYLE DARI INDEX (Agar Konsisten) --- */
+        /* --- STYLESHEET (CSS) --- */
         :root {
             --primary-color: #2563eb;
             --secondary-color: #1e293b;
@@ -26,7 +26,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-decoration: none; }
         body { background-color: var(--bg-color); color: var(--text-color); }
 
-        /* Layout & Sidebar (Sama persis dengan index.html) */
+        /* Layout & Sidebar */
         .app-container { display: flex; min-height: 100vh; }
         .sidebar { width: var(--sidebar-width); background-color: var(--secondary-color); color: white; position: fixed; height: 100vh; left: 0; top: 0; transition: var(--transition); z-index: 100; display: flex; flex-direction: column; }
         .sidebar-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -37,7 +37,6 @@
         .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.05); color: white; border-left-color: var(--primary-color); }
         .menu-icon { width: 25px; font-size: 1.1rem; margin-right: 10px; }
         
-        /* Main Content Wrapper */
         .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; }
         header { background-color: var(--card-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 90; }
         .toggle-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; }
@@ -47,7 +46,7 @@
         /* --- STYLING KHUSUS HALAMAN DATA UNIT --- */
         main { padding: 30px; }
 
-        /* Toolbar (Search & Add Button) */
+        /* Toolbar */
         .action-toolbar {
             display: flex;
             justify-content: space-between;
@@ -108,14 +107,14 @@
 
         .btn-add:hover { background-color: #1d4ed8; transform: translateY(-2px); }
 
-        /* Grid System untuk Card List */
+        /* Grid System */
         .unit-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 25px;
         }
 
-        /* Card Style Ticket */
+        /* Card Style */
         .unit-card {
             background: white;
             border-radius: 12px;
@@ -174,7 +173,12 @@
             line-height: 1.6;
             margin-bottom: 20px;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            
+            /* --- PERBAIKAN LINE CLAMP DI SINI --- */
+            -webkit-line-clamp: 3; /* Dukungan browser lama */
+            line-clamp: 3;         /* Standar baru */
+            /* ----------------------------------- */
+            
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -203,7 +207,6 @@
         }
         .action-links a:hover { text-decoration: underline; }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.active { transform: translateX(0); }
@@ -271,7 +274,7 @@
                 <section class="action-toolbar">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="searchInput" onkeyup="searchCards()" placeholder="Cari Unit, Ruangan, atau Kendala...">
+                        <input type="text" id="searchInput" onkeyup="searchCards()" placeholder="Cari Tahun atau ID...">
                     </div>
                     <button class="btn-add">
                         <i class="fas fa-plus"></i> Tambah Laporan
@@ -296,7 +299,7 @@
                                 <i class="far fa-calendar-alt"></i> Maret - Desember 2024
                             </div>
                             <div class="action-links">
-                                <a href="https://docs.google.com/spreadsheets/d/1raV7GICONMX05pS_YqCXDL4_EFiP84FaPI3eJeYiKxE/edit?gid=203598211#gid=203598211">Detail</a>
+                                <a href="https://docs.google.com/spreadsheets/d/1raV7GICONMX05pS_YqCXDL4_EFiP84FaPI3eJeYiKxE/edit?gid=203598211#gid=203598211" target="_blank">Detail</a>
                             </div>
                         </div>
                     </div>
@@ -317,7 +320,7 @@
                                 <i class="far fa-calendar-alt"></i> Januari - Desember 2025
                             </div>
                             <div class="action-links">
-                                <a href="https://docs.google.com/spreadsheets/d/19FCKjhrsuxiTd-2U_yPqr9rG_Hs35sBy4K1fMTQbgCU/edit?usp=sharing">Detail</a>
+                                <a href="https://docs.google.com/spreadsheets/d/19FCKjhrsuxiTd-2U_yPqr9rG_Hs35sBy4K1fMTQbgCU/edit?usp=sharing" target="_blank">Detail</a>
                             </div>
                         </div>
                     </div>
@@ -338,18 +341,44 @@
                                 <i class="far fa-calendar-alt"></i> Januari - Desember 2026
                             </div>
                             <div class="action-links">
-                                <a href="https://docs.google.com/spreadsheets/d/1LaSgNxCTFuuSCTDvFSUbvNl9lyN1smNXrV9oPF-QD3o/edit?usp=sharing">Detail</a>
+                                <a href="https://docs.google.com/spreadsheets/d/1LaSgNxCTFuuSCTDvFSUbvNl9lyN1smNXrV9oPF-QD3o/edit?usp=sharing" target="_blank">Detail</a>
                             </div>
                         </div>
                     </div>
 
-                    </section>
+                </section>
             </main>
         </div>
     </div>
 
-    <script src="scripts.js">
-       
+    <script>
+        // 1. Fungsi Sidebar Toggle (Mobile)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+            const closeBtn = document.getElementById('closeSidebar');
+            if (window.innerWidth <= 768) {
+                closeBtn.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+            }
+        }
+
+        // 2. Fungsi Search (Pencarian Kartu)
+        function searchCards() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('unit-card');
+
+            for (let i = 0; i < cards.length; i++) {
+                // Mencari teks di dalam judul (h4) dan deskripsi (p)
+                let title = cards[i].querySelector('h4').innerText.toLowerCase();
+                let desc = cards[i].querySelector('p').innerText.toLowerCase();
+                
+                if (title.includes(input) || desc.includes(input)) {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
     </script>
 </body>
 </html>
