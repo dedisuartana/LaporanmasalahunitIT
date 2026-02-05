@@ -6,18 +6,16 @@
     <title>Permintaan Barang - IT Support</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
-        /* --- STYLE CSS --- */
+        /* --- TEMA UTAMA (Sama dengan Utility) --- */
         :root {
             --primary-color: #2563eb;
             --secondary-color: #1e293b;
             --bg-color: #f1f5f9;
             --text-color: #334155;
             --card-bg: #ffffff;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
             --sidebar-width: 260px;
             --transition: all 0.3s ease;
         }
@@ -26,7 +24,7 @@
         body { background-color: var(--bg-color); color: var(--text-color); }
 
         /* Layout & Sidebar */
-        .app-container { display: flex; min-height: 100vh; }
+        .app-container { display: flex; min-height: 100vh; position: relative; }
         .sidebar { width: var(--sidebar-width); background-color: var(--secondary-color); color: white; position: fixed; height: 100vh; left: 0; top: 0; transition: var(--transition); z-index: 100; display: flex; flex-direction: column; }
         .sidebar-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .logo { width: 35px; height: 35px; background: white; border-radius: 8px; object-fit: cover; }
@@ -36,119 +34,119 @@
         .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.05); color: white; border-left-color: var(--primary-color); }
         .menu-icon { width: 25px; font-size: 1.1rem; margin-right: 10px; }
         
-        .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; }
+        .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; width: 100%; }
         header { background-color: var(--card-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 90; }
         .toggle-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; }
         .user-profile { display: flex; align-items: center; gap: 12px; }
         .user-avatar img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
 
-        /* --- STYLING HALAMAN --- */
-        main { padding: 30px; }
-
-        .form-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            border-top: 4px solid var(--primary-color);
-        }
-
-        .form-header h2 { font-size: 1.3rem; margin-bottom: 5px; color: var(--secondary-color); }
-        .form-header p { color: #64748b; font-size: 0.9rem; margin-bottom: 25px; }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .form-group { margin-bottom: 5px; }
-        .form-group.full-width { grid-column: span 2; }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--text-color);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            background-color: #f8fafc;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            outline: none;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-color);
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        textarea.form-control { resize: vertical; min-height: 100px; }
-
-        .btn-submit {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .btn-submit:hover { background-color: #1d4ed8; transform: translateY(-2px); }
-
-        /* Table Section */
-        .table-section {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-
-        .table-header { padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .table-header h3 { font-size: 1.1rem; color: var(--secondary-color); }
-        .table-responsive { overflow-x: auto; width: 100%; }
-        .custom-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        .custom-table th, .custom-table td { padding: 15px 20px; text-align: left; border-bottom: 1px solid #f1f5f9; }
-        .custom-table th { background-color: #f8fafc; font-weight: 600; color: #64748b; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .custom-table tr:hover { background-color: #f8fafc; }
-
-        /* Badges */
-        .badge { padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
-        .badge.urgent { background-color: #fee2e2; color: #991b1b; }
-        .badge.normal { background-color: #e0f2fe; color: #075985; }
-        .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-        .status.approved { color: #166534; }
-        .status.approved .status-dot { background-color: #166534; }
-        .status.pending { color: #b45309; }
-        .status.pending .status-dot { background-color: #f59e0b; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 95; }
 
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.active { transform: translateX(0); }
             .main-content { margin-left: 0; }
             .toggle-btn { display: block; }
-            .form-grid { grid-template-columns: 1fr; }
+            .overlay.active { display: block; }
         }
+
+        /* --- STYLING FORM PERMINTAAN --- */
+        main { padding: 30px; }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* Bagian Kiri: Form */
+        .form-container {
+            flex: 2;
+            min-width: 300px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        /* Bagian Kanan: Info/Guideline */
+        .info-container {
+            flex: 1;
+            min-width: 250px;
+            background: #e0f2fe; /* Light Blue */
+            padding: 30px;
+            border-radius: 12px;
+            height: fit-content;
+            border: 1px solid #bae6fd;
+        }
+
+        h2 { color: var(--secondary-color); margin-bottom: 20px; font-size: 1.25rem; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 500; color: #475569; font-size: 0.9rem; }
+        
+        .input-wrapper { position: relative; }
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 15px 12px 45px; /* Space for icon */
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: #f8fafc;
+        }
+        
+        .form-textarea { padding-left: 15px; height: 100px; resize: vertical; }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover { background-color: #1d4ed8; transform: translateY(-2px); }
+        .btn-submit:disabled { background-color: #94a3b8; cursor: not-allowed; transform: none; }
+
+        /* Style untuk Info Box */
+        .info-list { list-style: none; }
+        .info-list li {
+            display: flex; gap: 12px; margin-bottom: 15px; font-size: 0.9rem; color: #334155;
+        }
+        .info-icon { color: var(--primary-color); margin-top: 3px; }
+
     </style>
 </head>
 <body>
 
     <div class="app-container">
+        <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div style="display: flex; align-items: center;">
@@ -162,24 +160,19 @@
             
             <nav class="sidebar-menu">
                 <a href="index.html" class="menu-item">
-                    <i class="fas fa-tachometer-alt menu-icon"></i>
-                    <span class="menu-text">Dashboard</span>
+                    <i class="fas fa-tachometer-alt menu-icon"></i> <span class="menu-text">Dashboard</span>
                 </a>
                 <a href="dataunit.html" class="menu-item">
-                    <i class="fas fa-desktop menu-icon"></i>
-                    <span class="menu-text">Data Unit</span>
+                    <i class="fas fa-desktop menu-icon"></i> <span class="menu-text">Data Unit</span>
                 </a>
                 <a href="pengajuan.html" class="menu-item active">
-                    <i class="fas fa-boxes menu-icon"></i>
-                    <span class="menu-text">Permintaan Barang</span>
+                    <i class="fas fa-boxes menu-icon"></i> <span class="menu-text">Permintaan Barang</span>
                 </a>
                 <a href="utility.html" class="menu-item">
-                    <i class="fas fa-tools menu-icon"></i>
-                    <span class="menu-text">Utility IT</span>
+                    <i class="fas fa-tools menu-icon"></i> <span class="menu-text">Utility IT</span>
                 </a>
                 <a href="#" class="menu-item">
-                    <i class="fas fa-cog menu-icon"></i>
-                    <span class="menu-text">Pengaturan</span>
+                    <i class="fas fa-cog menu-icon"></i> <span class="menu-text">Pengaturan</span>
                 </a>
             </nav>
         </aside>
@@ -190,7 +183,7 @@
                     <button class="toggle-btn" onclick="toggleSidebar()">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <h3 style="margin:0; color: #334155;">Pengadaan IT</h3>
+                    <h3 style="margin:0; color: #334155;">Form Permintaan Barang</h3>
                 </div>
                 <div class="user-profile">
                     <div class="user-avatar">
@@ -200,145 +193,165 @@
             </header>
 
             <main>
-                <section class="form-card">
-                    <div class="form-header">
-                        <h2>Buat Pengajuan Baru</h2>
-                        <p>Silakan isi form di bawah ini. Data akan otomatis diarahkan ke WhatsApp.</p>
-                    </div>
+                <div class="content-wrapper">
                     
-                    <form onsubmit="kirimKeWhatsApp(event)">
-                        <div class="form-grid">
+                    <div class="form-container">
+                        <h2><i class="fas fa-edit"></i> Isi Detail Permintaan</h2>
+                        
+                        <form id="requestForm">
+                            
                             <div class="form-group">
-                                <label for="itemName">Nama Barang / Spesifikasi</label>
-                                <input type="text" id="itemName" class="form-control" placeholder="Contoh: Kertas A4" required>
+                                <label class="form-label">Nama Pemohon</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input type="text" name="nama" class="form-input" placeholder="Nama Lengkap Anda" required>
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="category">Kategori</label>
-                                <select id="category" class="form-control">
-                                    <option value="hardware">Hardware / Sparepart</option>
-                                    <option value="consumable">Consumable (Tinta/Kertas)</option>
-                                    <option value="network">Alat Medis</option>
-                                </select>
+                                <label class="form-label">Divisi / Unit</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-building input-icon"></i>
+                                    <select name="divisi" class="form-select" required>
+                                        <option value="" disabled selected>Pilih Divisi...</option>
+                                        <option value="IT Support">IT Support</option>
+                                        <option value="Keuangan">Keuangan</option>
+                                        <option value="HRD">HRD</option>
+                                        <option value="Pelayanan Medis">Perawat</option>
+                                        <option value="Farmasi">Farmasi</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 20px;">
+                                <div class="form-group" style="flex: 2;">
+                                    <label class="form-label">Nama Barang</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-box input-icon"></i>
+                                        <input type="text" name="barang" class="form-input" placeholder="Contoh: Mouse Logitech" required>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label class="form-label">Jumlah</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-sort-numeric-up input-icon"></i>
+                                        <input type="number" name="jumlah" class="form-input" placeholder="0" min="1" required>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="quantity">Jumlah</label>
-                                <input type="number" id="quantity" class="form-control" placeholder="0" min="1" required>
+                                <label class="form-label">Prioritas Kebutuhan</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-exclamation-circle input-icon"></i>
+                                    <select name="prioritas" class="form-select" required>
+                                        <option value="Normal">Normal (3-5 Hari)</option>
+                                        <option value="Urgent">Urgent (Segera)</option>
+                                        <option value="Low">Low (Bisa ditunda)</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="urgency">Tingkat Urgensi</label>
-                                <select id="urgency" class="form-control">
-                                    <option value="normal">Normal</option>
-                                    <option value="high">Mendesak (High)</option>
-                                    <option value="critical">Critical (Operasional Berhenti)</option>
-                                </select>
+                                <label class="form-label">Keterangan / Alasan</label>
+                                <textarea name="keterangan" class="form-textarea" placeholder="Jelaskan spesifikasi atau alasan permintaan..."></textarea>
                             </div>
 
-                            <div class="form-group">
-                                <label for="dateNeeded">Dibutuhkan Tanggal</label>
-                                <input type="date" id="dateNeeded" class="form-control" required>
-                            </div>
+                            <button type="submit" class="btn-submit" id="btnSubmit">
+                                <i class="fas fa-paper-plane"></i> Kirim Permintaan
+                            </button>
 
-                            <div class="form-group full-width">
-                                <label for="reason">Alasan Permintaan / Keterangan</label>
-                                <textarea id="reason" class="form-control" placeholder="Jelaskan kenapa barang ini dibutuhkan..."></textarea>
-                            </div>
+                        </form>
+                    </div>
+
+                    <div class="info-container">
+                        <h4 style="margin-bottom: 15px; color: #0369a1;"><i class="fas fa-info-circle"></i> Petunjuk</h4>
+                        <ul class="info-list">
+                            <li>
+                                <i class="fas fa-check-circle info-icon"></i>
+                                <span>Pastikan nama barang spesifik (Merk/Tipe) untuk mempercepat proses.</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock info-icon"></i>
+                                <span>Permintaan <strong>Urgent</strong> memerlukan persetujuan Kepala Unit.</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-history info-icon"></i>
+                                <span>Cek status permintaan Anda secara berkala di Dashboard.</span>
+                            </li>
+                        </ul>
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #bae6fd;">
+                            <small style="color: #64748b;">Butuh bantuan?</small><br>
+                            <strong>Ext. 101 (IT Support)</strong>
                         </div>
-
-                        <button type="submit" class="btn-submit">
-                            <i class="fas fa-paper-plane"></i> Kirim Pengajuan
-                        </button>
-                    </form>
-                </section>
-
-                <section class="table-section">
-                    <div class="table-header">
-                        <h3>Riwayat Pengajuan Terakhir</h3>
-                        <button style="border:none; background:none; color: var(--primary-color); cursor:pointer;">Lihat Semua</button>
                     </div>
-                    
-                    <!-- <div class="table-responsive">
-                        <table class="custom-table">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Nama Barang</th>
-                                    <th>Jumlah</th>
-                                    <th>Urgensi</th>
-                                    <th>Status Approval</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>29 Jan 2026</td>
-                                    <td>Mobil Lamborgini</td>
-                                    <td>1 Unit</td>
-                                    <td><span class="badge urgent">Butuh</span></td>
-                                    <td>
-                                        <span class="status cancel"><span class="status-dot"></span>ditolak</span>
-                                    </td>
-                                    <td><a href="#" style="color: #64748b;"><i class="fas fa-ellipsis-v"></i></a></td>
-                                </tr>
 
-                            </tbody>
-                        </table>
-                    </div> -->
-                </section>
+                </div>
             </main>
         </div>
     </div>
 
     <script>
-        // 1. Fungsi Sidebar (Mobile)
+        // --- 1. SCRIPT TOGGLE SIDEBAR (Sama seperti sebelumnya) ---
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('active');
+            const overlay = document.getElementById('overlay');
             const closeBtn = document.getElementById('closeSidebar');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
             if (window.innerWidth <= 768) {
                 closeBtn.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
             }
         }
 
-        // 2. Fungsi Kirim ke WhatsApp
-        function kirimKeWhatsApp(event) {
-            event.preventDefault(); // Mencegah reload halaman
+        // --- 2. SCRIPT KIRIM KE GOOGLE SHEET ---
+        
+        // GANTI URL INI DENGAN URL DEPLOYMENT SCRIPT ANDA NANTI
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZ1zEaxHnlF3JBFyTYFKuHQ2J2BmeApH7ZL1BrzyRwvMN5-lvGnopt_AKcjAWBa9E2KQ/exec'; 
 
-            // Ambil data dari form
-            const itemName = document.getElementById('itemName').value;
-            const categorySelect = document.getElementById('category');
-            const category = categorySelect.options[categorySelect.selectedIndex].text;
-            const quantity = document.getElementById('quantity').value;
-            const price = document.getElementById('price').value || "-";
-            const urgencySelect = document.getElementById('urgency');
-            const urgency = urgencySelect.options[urgencySelect.selectedIndex].text;
-            const dateNeeded = document.getElementById('dateNeeded').value;
-            const reason = document.getElementById('reason').value;
+        const form = document.getElementById('requestForm');
+        const btnSubmit = document.getElementById('btnSubmit');
 
-            // --- GANTI NOMOR DI SINI ---
-            const nomorTujuan = "6285858369212"; 
-            // ---------------------------
+        form.addEventListener('submit', e => {
+            e.preventDefault();
 
-            // Buat template pesan
-            let message = `*PERMINTAAN BARANG BARU*\n`;
-            message += `----------------------------------\n`;
-            message += `📦 *Barang:* ${itemName}\n`;
-            message += `📂 *Kategori:* ${category}\n`;
-            message += `🔢 *Jumlah:* ${quantity} Pcs\n`;
-            message += `🚨 *Urgensi:* ${urgency}\n`;
-            message += `📅 *Tgl Pakai:* ${dateNeeded}\n`;
-            message += `📝 *Alasan:* ${reason}\n`;
-            message += `----------------------------------\n`;
-            message += `_Dikirim via Dashboard IT Support_`;
+            // Efek Loading
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
 
-            // Encode pesan dan buka WA
-            const encodedMessage = encodeURIComponent(message);
-            const waUrl = `https://wa.me/${nomorTujuan}?text=${encodedMessage}`;
-            
-            window.open(waUrl, '_blank');
-        }
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => {
+                // Reset Tombol
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Permintaan';
+                
+                // Reset Form
+                form.reset();
+
+                // Tampilkan Sukses
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Permintaan barang telah dikirim ke IT Support.',
+                    icon: 'success',
+                    confirmButtonColor: '#2563eb'
+                });
+            })
+            .catch(error => {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Permintaan';
+                
+                Swal.fire({
+                    title: 'Gagal!',
+                    text: 'Terjadi kesalahan jaringan. Coba lagi.',
+                    icon: 'error'
+                });
+                console.error('Error!', error.message);
+            });
+        });
     </script>
 </body>
 </html>
