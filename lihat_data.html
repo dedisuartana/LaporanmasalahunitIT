@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Permintaan - IT Support</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- STYLE DASAR (SAMA DENGAN SEBELUMNYA) --- */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e293b;
+            --bg-color: #f1f5f9;
+            --text-color: #334155;
+            --card-bg: #ffffff;
+            --sidebar-width: 260px;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-decoration: none; }
+        body { background-color: var(--bg-color); color: var(--text-color); }
+
+        /* Layout & Sidebar (Copy Paste Style Lama agar konsisten) */
+        .app-container { display: flex; min-height: 100vh; position: relative; }
+        .sidebar { width: var(--sidebar-width); background-color: var(--secondary-color); color: white; position: fixed; height: 100vh; left: 0; top: 0; transition: var(--transition); z-index: 100; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { width: 35px; height: 35px; background: white; border-radius: 8px; object-fit: cover; }
+        .logo-text { font-weight: 600; font-size: 1.1rem; margin-left: 10px; }
+        .sidebar-menu { padding: 20px 0; flex: 1; }
+        .menu-item { display: flex; align-items: center; padding: 12px 25px; color: #94a3b8; transition: var(--transition); border-left: 3px solid transparent; }
+        .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.05); color: white; border-left-color: var(--primary-color); }
+        .menu-icon { width: 25px; font-size: 1.1rem; margin-right: 10px; }
+        
+        .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; width: 100%; }
+        header { background-color: var(--card-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 90; }
+        .toggle-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; }
+        .user-profile { display: flex; align-items: center; gap: 12px; }
+        .user-avatar img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
+        .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 95; }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .toggle-btn { display: block; }
+            .overlay.active { display: block; }
+        }
+
+        /* --- STYLE KHUSUS TABEL --- */
+        main { padding: 30px; }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .btn-back {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .btn-back:hover { background-color: var(--primary-color); color: white; }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #475569;
+        }
+
+        tr:hover td { background-color: #f1f5f9; }
+
+        /* Badge Status & Prioritas */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .badge-urgent { background-color: #fee2e2; color: #ef4444; }
+        .badge-normal { background-color: #dbeafe; color: #2563eb; }
+        .badge-low { background-color: #f3f4f6; color: #6b7280; }
+
+        /* Loading Spinner */
+        .loading-container { text-align: center; padding: 40px; }
+        .fa-spinner { font-size: 2rem; color: var(--primary-color); }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div style="display: flex; align-items: center;">
+                    <img src="logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/35'">
+                    <span class="logo-text">IT Dashboard</span>
+                </div>
+                <button class="toggle-btn" onclick="toggleSidebar()" style="color: white; display: none;" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-tachometer-alt menu-icon"></i> <span class="menu-text">Dashboard</span>
+                </a>
+                <a href="dataunit.html" class="menu-item">
+                    <i class="fas fa-desktop menu-icon"></i> <span class="menu-text">Data Unit</span>
+                </a>
+                <a href="pengajuan.html" class="menu-item active">
+                    <i class="fas fa-boxes menu-icon"></i> <span class="menu-text">Permintaan Barang</span>
+                </a>
+                <a href="utility.html" class="menu-item">
+                    <i class="fas fa-tools menu-icon"></i> <span class="menu-text">Utility IT</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog menu-icon"></i> <span class="menu-text">Pengaturan</span>
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="toggle-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h3 style="margin:0; color: #334155;">Data Permintaan</h3>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="dedi.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <div class="card">
+                    <div class="page-header">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <a href="pengajuan.html" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali</a>
+                            <h2 style="margin:0; font-size: 1.2rem; color: var(--secondary-color);">List Permintaan Unit</h2>
+                        </div>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Cari barang atau nama..." onkeyup="filterTable()">
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Nama Pemohon</th>
+                                    <th>Divisi</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jml</th>
+                                    <th>Prioritas</th>
+                                    <th>Keterangan</th>
+                                    </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                </tbody>
+                        </table>
+                        
+                        <div id="loading" class="loading-container">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p style="margin-top: 10px; color: #64748b;">Mengambil data dari server...</p>
+                        </div>
+
+                        <div id="emptyData" class="loading-container" style="display: none;">
+                            <i class="fas fa-folder-open" style="color: #cbd5e1;"></i>
+                            <p style="margin-top: 10px; color: #64748b;">Belum ada data permintaan.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // --- FETCH DATA DARI GOOGLE SHEET ---
+        
+        // Ganti URL dengan URL Script yang sama dengan pengajuan.html
+        // Tambahkan ?action=read di akhir fetch
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTwhjQJhB4YcsQk99dO1H0DJJpLa3pDm_G0R0NBKdrY4XNLVbDYv_iQbHaURXuIGqhDA/exec'; 
+
+        async function fetchData() {
+            try {
+                // Request dengan parameter action=read
+                const response = await fetch(SCRIPT_URL + '?action=read');
+                const result = await response.json();
+                
+                const tbody = document.getElementById('tableBody');
+                const loading = document.getElementById('loading');
+                const empty = document.getElementById('emptyData');
+
+                loading.style.display = 'none';
+
+                if (result.status === 'success' && result.data.length > 0) {
+                    // Balik urutan agar data terbaru ada di atas (reverse)
+                    const dataTerbaru = result.data.reverse();
+
+                    dataTerbaru.forEach(item => {
+                        const tr = document.createElement('tr');
+                        
+                        // Format Tanggal
+                        let dateStr = item.timestamp ? new Date(item.timestamp).toLocaleDateString('id-ID') : '-';
+                        
+                        // Badge Class Logic
+                        let priorityClass = 'badge-normal';
+                        if(item.prioritas === 'Urgent') priorityClass = 'badge-urgent';
+                        if(item.prioritas === 'Low') priorityClass = 'badge-low';
+
+                        // Sesuaikan nama field dengan hasil console.log jika tidak muncul
+                        // Pastikan header di Excel (Baris 1) konsisten
+                        tr.innerHTML = `
+                            <td>${dateStr}</td>
+                            <td><span style="font-weight:500;">${item.namapemohon || item.nama || '-'}</span></td>
+                            <td>${item.divisi || '-'}</td>
+                            <td>${item.namabarang || item.barang || '-'}</td>
+                            <td>${item.jumlah || '0'}</td>
+                            <td><span class="badge ${priorityClass}">${item.prioritas || 'Normal'}</span></td>
+                            <td style="max-width: 200px; color: #64748b; font-size: 0.85rem;">${item.keterangan || '-'}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    empty.style.display = 'block';
+                }
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('loading').innerHTML = '<span style="color:red">Gagal mengambil data. Cek koneksi internet.</span>';
+            }
+        }
+
+        // Jalankan saat halaman load
+        window.onload = fetchData;
+
+        // --- FILTER SEARCH FUNCTION ---
+        function filterTable() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("dataTable");
+            const tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) { // Mulai dari 1 untuk skip Header
+                // Cari di kolom Nama (index 1) dan Barang (index 3)
+                let tdNama = tr[i].getElementsByTagName("td")[1];
+                let tdBarang = tr[i].getElementsByTagName("td")[3];
+                
+                if (tdNama || tdBarang) {
+                    let textNama = tdNama.textContent || tdNama.innerText;
+                    let textBarang = tdBarang.textContent || tdBarang.innerText;
+                    
+                    if (textNama.toLowerCase().indexOf(filter) > -1 || textBarang.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
+        }
+    </script>
+</body>
+</html>
