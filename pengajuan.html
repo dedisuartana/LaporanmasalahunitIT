@@ -9,7 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+<<<<<<< HEAD
         /* --- TEMA UTAMA --- */
+=======
+        /* --- TEMA UTAMA (Sama dengan Utility) --- */
+>>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
         :root {
             --primary-color: #2563eb;
             --secondary-color: #1e293b;
@@ -80,6 +84,7 @@
             border: 1px solid #bae6fd;
         }
 
+<<<<<<< HEAD
         /* --- PERBAIKAN: STYLE TOMBOL SECONDARY --- */
         .btn-secondary {
             background-color: #e2e8f0;
@@ -99,6 +104,8 @@
         }
         /* ----------------------------------------- */
 
+=======
+>>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
         h2 { color: var(--secondary-color); margin-bottom: 20px; font-size: 1.25rem; }
         
         .form-group { margin-bottom: 20px; }
@@ -215,6 +222,7 @@
                 <div class="content-wrapper">
                     
                     <div class="form-container">
+<<<<<<< HEAD
                         
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <h2 style="margin: 0;"><i class="fas fa-edit"></i> Isi Detail Permintaan</h2>
@@ -317,13 +325,117 @@
                         </div>
                     </div>
 
+=======
+                        <h2><i class="fas fa-edit"></i> Isi Detail Permintaan</h2>
+                        
+                        <form id="requestForm">
+                            
+                            <div class="form-group">
+                                <label class="form-label">Nama Pemohon</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input type="text" name="nama" class="form-input" placeholder="Nama Lengkap Anda" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Divisi / Unit</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-building input-icon"></i>
+                                    <select name="divisi" class="form-select" required>
+                                        <option value="" disabled selected>Pilih Divisi...</option>
+                                        <option value="Perawatrajal">Perawat Rawat Jalan</option>
+                                        <option value="Keuangan">Keuangan</option>
+                                        <option value="HRD">HRD</option>
+                                        <option value="Perawatranap">Perawat Rawat Inap</option>
+                                        <option value="Farmasi">Farmasi</option>
+                                        <option value="Radiologi">Radiologi</option>
+                                        <option value="Laboratorium">Laboratorium</option>
+                                        <option value="Administrasi">Administrasi</option>
+                                        <option value="Rekammedis">Casemix</option>
+                                        <option value="Gizi" >Gizi</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 20px;">
+                                <div class="form-group" style="flex: 2;">
+                                    <label class="form-label">Nama Barang</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-box input-icon"></i>
+                                        <input type="text" name="barang" class="form-input" placeholder="Contoh: Mouse Logitech" required>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label class="form-label">Jumlah</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-sort-numeric-up input-icon"></i>
+                                        <input type="number" name="jumlah" class="form-input" placeholder="0" min="1" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Prioritas Kebutuhan</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-exclamation-circle input-icon"></i>
+                                    <select name="prioritas" class="form-select" required>
+                                        <option value="Normal">Normal (3-5 Hari)</option>
+                                        <option value="Urgent">Urgent (Segera)</option>
+                                        <option value="Low">Low (Bisa ditunda)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Keterangan / Alasan</label>
+                                <textarea name="keterangan" class="form-textarea" placeholder="Jelaskan spesifikasi atau alasan permintaan..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-submit" id="btnSubmit">
+                                <i class="fas fa-paper-plane"></i> Kirim Permintaan
+                            </button>
+
+                        </form>
+                    </div>
+
+                    <div class="info-container">
+                        <h4 style="margin-bottom: 15px; color: #0369a1;"><i class="fas fa-info-circle"></i> Petunjuk</h4>
+                        <ul class="info-list">
+                            <li>
+                                <i class="fas fa-check-circle info-icon"></i>
+                                <span>Pastikan nama barang spesifik (Merk/Tipe) untuk mempercepat proses.</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock info-icon"></i>
+                                <span>Permintaan <strong>Urgent</strong> memerlukan persetujuan Kepala Unit.</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-history info-icon"></i>
+                                <span>Cek status permintaan Anda secara berkala di Dashboard.</span>
+                            </li>
+                        </ul>
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #bae6fd;">
+                            <small style="color: #64748b;">Butuh bantuan?</small><br>
+                            <strong>CP : 085858369212(Dedy)</strong>
+                            <strong>CP : 087760284777(Septa)</strong>
+
+                        </div>
+                    </div>
+
+>>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
                 </div>
             </main>
         </div>
     </div>
 
     <script>
+<<<<<<< HEAD
         // --- 1. SCRIPT TOGGLE SIDEBAR ---
+=======
+        // --- 1. SCRIPT TOGGLE SIDEBAR (Sama seperti sebelumnya) ---
+>>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('overlay');
@@ -336,7 +448,13 @@
         }
 
         // --- 2. SCRIPT KIRIM KE GOOGLE SHEET ---
+<<<<<<< HEAD
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTwhjQJhB4YcsQk99dO1H0DJJpLa3pDm_G0R0NBKdrY4XNLVbDYv_iQbHaURXuIGqhDA/exec';
+=======
+        
+        // GANTI URL INI DENGAN URL DEPLOYMENT SCRIPT ANDA NANTI
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZ1zEaxHnlF3JBFyTYFKuHQ2J2BmeApH7ZL1BrzyRwvMN5-lvGnopt_AKcjAWBa9E2KQ/exec'; 
+>>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
 
         const form = document.getElementById('requestForm');
         const btnSubmit = document.getElementById('btnSubmit');
@@ -344,6 +462,10 @@
         form.addEventListener('submit', e => {
             e.preventDefault();
 
+<<<<<<< HEAD
+=======
+            // Efek Loading
+>>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
 
@@ -352,6 +474,7 @@
                 body: new FormData(form)
             })
             .then(response => {
+<<<<<<< HEAD
                 if (!response.ok) {
                     throw new Error('Network response was not ok: ' + response.statusText);
                 }
@@ -364,6 +487,19 @@
                 Swal.fire({
                     title: 'Berhasil!',
                     text: 'Permintaan barang telah dikirim ke Bagian Umum & Keuangan.',
+=======
+                // Reset Tombol
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Permintaan';
+                
+                // Reset Form
+                form.reset();
+
+                // Tampilkan Sukses
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Permintaan barang telah dikirim ke IT Support.',
+>>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
                     icon: 'success',
                     confirmButtonColor: '#2563eb'
                 });
@@ -374,10 +510,17 @@
                 
                 Swal.fire({
                     title: 'Gagal!',
+<<<<<<< HEAD
                     text: 'Terjadi kesalahan jaringan atau server. Coba lagi.',
                     icon: 'error'
                 });
                 console.error('Error Details:', error);
+=======
+                    text: 'Terjadi kesalahan jaringan. Coba lagi.',
+                    icon: 'error'
+                });
+                console.error('Error!', error.message);
+>>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
             });
         });
     </script>
