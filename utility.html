@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- COPY STYLE DARI HALAMAN SEBELUMNYA --- */
         :root {
             --primary-color: #2563eb;
             --secondary-color: #1e293b;
@@ -33,7 +32,7 @@
         .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.05); color: white; border-left-color: var(--primary-color); }
         .menu-icon { width: 25px; font-size: 1.1rem; margin-right: 10px; }
         
-        .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; width: 100%; }
+        .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; width: 100%; min-height: 100vh; }
         header { background-color: var(--card-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 90; }
         .toggle-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; }
         .user-profile { display: flex; align-items: center; gap: 12px; }
@@ -46,7 +45,10 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.5);
             z-index: 95;
+            transition: var(--transition);
+            opacity: 0;
         }
+        .overlay.active { display: block; opacity: 1; }
 
         /* --- STYLING KHUSUS HALAMAN UTILITY --- */
         main { padding: 30px; }
@@ -56,11 +58,14 @@
             font-weight: 600;
             color: var(--secondary-color);
             margin-bottom: 20px;
-            margin-top: 10px;
+            margin-top: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
+        
+        /* Tambahan margin top untuk section pertama */
+        .section-title:first-child { margin-top: 10px; }
 
         .utility-grid {
             display: grid;
@@ -100,7 +105,7 @@
         .bg-folder { background-color: #fef3c7; color: #d97706; }
         .bg-pdf { background-color: #fee2e2; color: #dc2626; }
         .bg-app { background-color: #dcfce7; color: #166534; }
-        .bg-local { background-color: #f3e8ff; color: #7e22ce; } /* New Color for Local */
+        .bg-local { background-color: #f3e8ff; color: #7e22ce; }
 
         .card-content h4 { font-size: 1rem; color: var(--secondary-color); margin-bottom: 5px; }
         .card-content p { font-size: 0.85rem; color: #64748b; line-height: 1.4; }
@@ -119,8 +124,9 @@
             color: #64748b;
             padding: 2px 6px;
             border-radius: 4px;
-            margin-top: 5px;
+            margin-top: 8px;
             border: 1px solid #e2e8f0;
+            font-family: monospace;
         }
 
         @media (max-width: 768px) {
@@ -128,7 +134,6 @@
             .sidebar.active { transform: translateX(0); }
             .main-content { margin-left: 0; }
             .toggle-btn { display: block; }
-            .overlay.active { display: block; }
         }
     </style>
 </head>
@@ -162,7 +167,8 @@
                     <span class="menu-text">Permintaan Barang</span>
                 </a>
                 <a href="utility.html" class="menu-item active">
-                    <i class="fas fa-tools menu-icon"></i> <span class="menu-text">Utility IT</span>
+                    <i class="fas fa-tools menu-icon"></i> 
+                    <span class="menu-text">Utility IT</span>
                 </a>
                 <a href="#" class="menu-item">
                     <i class="fas fa-cog menu-icon"></i>
@@ -181,7 +187,7 @@
                 </div>
                 <div class="user-profile">
                     <div class="user-avatar">
-                        <img src="dedi.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
+                        <img src="dedi.jpg" alt="Profile Dedi Suartana" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
                     </div>
                 </div>
             </header>
@@ -192,7 +198,7 @@
                 </div>
                 
                 <section class="utility-grid">
-                    <a href="https://drive.google.com/drive/u/0/folders/CONTOH_ID_FOLDER" target="_blank" rel="noopener noreferrer" class="file-card">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
                         <div class="icon-box bg-drive">
                             <i class="fab fa-google-drive"></i>
                         </div>
@@ -203,35 +209,61 @@
                         <i class="fas fa-arrow-right action-arrow"></i>
                     </a>
 
-                    <a href="https://drive.google.com/drive/u/0/folders/CONTOH_ID_FOLDER" target="_blank" rel="noopener noreferrer" class="file-card">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
                         <div class="icon-box bg-drive">
                             <i class="fas fa-hdd"></i>
                         </div>
                         <div class="card-content">
                             <h4>Backup Driver PC</h4>
-                            <p>Kumpulan driver printer, scanner, dan PC Unit RS.</p>
+                            <p>Kumpulan driver printer, scanner, dan PC Unit.</p>
                         </div>
                         <i class="fas fa-arrow-right action-arrow"></i>
                     </a>
 
-                    <a href="https://drive.google.com/drive/folders/1CQ4JvzIHCqwTBPkgAZaNGMTC9z9SMh2K?usp=sharing" target="_blank" rel="noopener noreferrer" class="file-card">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
                         <div class="icon-box bg-folder">
                             <i class="fas fa-images"></i>
                         </div>
                         <div class="card-content">
                             <h4>Aset Desain & Logo</h4>
-                            <p>Logo RS, Template Surat, dan aset grafis lainnya.</p>
+                            <p>Logo resmi, Template Surat, dan aset grafis lainnya.</p>
                         </div>
                         <i class="fas fa-arrow-right action-arrow"></i>
                     </a>
                 </section>
-<<<<<<< HEAD
 
+                <div class="section-title">
+                    <i class="fas fa-network-wired" style="color: #7e22ce;"></i> Local Network & Tools
+                </div>
+
+                <section class="utility-grid">
+                    <a href="#" class="file-card">
+                        <div class="icon-box bg-local">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="card-content">
+                            <h4>Proxmox VE Server</h4>
+                            <p>Manajemen virtual mesin dan server lokal.</p>
+                            <span class="badge-local">192.168.1.10:8006</span>
+                        </div>
+                        <i class="fas fa-external-link-alt action-arrow"></i>
+                    </a>
+
+                    <a href="#" class="file-card">
+                        <div class="icon-box bg-app">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <div class="card-content">
+                            <h4>Router Mikrotik</h4>
+                            <p>WebFig login untuk manajemen bandwidth dan jaringan.</p>
+                            <span class="badge-local">192.168.88.1</span>
+                        </div>
+                        <i class="fas fa-external-link-alt action-arrow"></i>
+                    </a>
+                </section>
 
             </main>
         </div>
-=======
->>>>>>> 6a12bcff83dfdf04be38661fe2d15000f6df22ae
     </div>
 
     <script>
@@ -243,11 +275,20 @@
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
 
-            // Logika tombol close di sidebar
+            // Mengatur visibilitas tombol close berdasarkan lebar layar dan status sidebar
             if (window.innerWidth <= 768) {
                 closeBtn.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
             }
         }
+
+        // Menutup sidebar otomatis jika ukuran layar diperbesar (resize ke desktop mode)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                document.getElementById('sidebar').classList.remove('active');
+                document.getElementById('overlay').classList.remove('active');
+                document.getElementById('closeSidebar').style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
