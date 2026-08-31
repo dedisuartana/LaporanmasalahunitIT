@@ -3,384 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permintaan Barang</title>
+    <title>Permintaan Barang HM Karangasem</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        /* --- TEMA UTAMA --- */
+        /* --- TEMA UTAMA (FRESH & MODERN) --- */
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e293b;
-            --bg-color: #f1f5f9;
+            --primary-color: #3b82f6; 
+            --primary-hover: #2563eb;
+            --secondary-color: #0f172a;
+            --sidebar-bg: #ffffff;
+            --bg-color: #f4f7fe; 
             --text-color: #334155;
+            --text-muted: #64748b;
             --card-bg: #ffffff;
-            --sidebar-width: 260px;
-            --transition: all 0.3s ease;
+            --sidebar-width: 270px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-sm: 0 2px 4px rgba(112, 144, 176, 0.08);
+            --shadow-md: 0 10px 20px rgba(112, 144, 176, 0.12);
+            --shadow-hover: 0 15px 25px rgba(112, 144, 176, 0.18);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-decoration: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none; }
         body { background-color: var(--bg-color); color: var(--text-color); }
 
         /* Layout & Sidebar */
         .app-container { display: flex; min-height: 100vh; position: relative; }
-        .sidebar { width: var(--sidebar-width); background-color: var(--secondary-color); color: white; position: fixed; height: 100vh; left: 0; top: 0; transition: var(--transition); z-index: 100; display: flex; flex-direction: column; }
-        .sidebar-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { width: 35px; height: 35px; background: white; border-radius: 8px; object-fit: cover; }
-        .logo-text { font-weight: 600; font-size: 1.1rem; margin-left: 10px; }
-        .sidebar-menu { padding: 20px 0; flex: 1; }
-        .menu-item { display: flex; align-items: center; padding: 12px 25px; color: #94a3b8; transition: var(--transition); border-left: 3px solid transparent; }
-        .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.05); color: white; border-left-color: var(--primary-color); }
-        .menu-icon { width: 25px; font-size: 1.1rem; margin-right: 10px; }
+        .sidebar { 
+            width: var(--sidebar-width); background: var(--sidebar-bg); color: var(--text-color); 
+            position: fixed; height: 100vh; left: 0; top: 0; transition: var(--transition); z-index: 100; 
+            display: flex; flex-direction: column; box-shadow: 2px 0 20px rgba(112, 144, 176, 0.08); border-right: 1px solid #e2e8f0;
+        }
+        .sidebar-header { padding: 25px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dashed #e2e8f0; }
+        .logo { width: 42px; height: 42px; background: white; border-radius: 12px; object-fit: cover; box-shadow: var(--shadow-sm); padding: 2px;}
+        .logo-text { font-weight: 700; font-size: 1.25rem; margin-left: 12px; color: var(--secondary-color); letter-spacing: -0.5px;}
+        
+        .sidebar-menu { padding: 25px 0; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .menu-item { 
+            display: flex; align-items: center; padding: 14px 20px; margin: 0 15px; 
+            color: var(--text-muted); transition: var(--transition); border-radius: 12px; font-weight: 600; font-size: 0.95rem;
+        }
+        .menu-item:hover { background-color: #f1f5f9; color: var(--primary-hover); transform: translateX(5px); }
+        .menu-item.active { background: var(--primary-color); color: white; box-shadow: 0 6px 12px rgba(59, 130, 246, 0.25); }
+        .menu-icon { width: 25px; font-size: 1.2rem; margin-right: 12px; text-align: center; }
         
         .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; width: 100%; }
-        header { background-color: var(--card-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 90; }
-        .toggle-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; }
-        .user-profile { display: flex; align-items: center; gap: 12px; }
-        .user-avatar img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
+        
+        /* Header */
+        header { 
+            background-color: rgba(244, 247, 254, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 20px 35px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 90; 
+        }
+        .header-title { margin:0; color: var(--secondary-color); font-weight: 700; font-size: 1.3rem; letter-spacing: -0.5px;}
+        .toggle-btn { background: white; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; transition: var(--transition); width: 40px; height: 40px; border-radius: 10px; box-shadow: var(--shadow-sm); }
+        
+        .content-area { padding: 35px; flex: 1; padding-bottom: 100px; /* Space for sticky note */ }
 
-        .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 95; }
+        .welcome-section { margin-bottom: 25px; }
+        .welcome-title { font-size: 1.8rem; color: var(--secondary-color); font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .welcome-desc { color: var(--text-muted); font-size: 0.95rem; }
 
-        @media (max-width: 768px) {
+        /* Form Card */
+        .form-card {
+            background-color: var(--card-bg); border-radius: 20px; box-shadow: var(--shadow-md); max-width: 850px; margin: 0;
+            border: 1px solid #e2e8f0; border-top: 4px solid var(--primary-color); transition: var(--transition);
+        }
+        .form-header { padding: 25px 35px; border-bottom: 1px dashed #e2e8f0; display: flex; justify-content: space-between; align-items: center;}
+        .form-title { font-weight: 700; color: var(--secondary-color); font-size: 1.2rem;}
+        .form-body { padding: 35px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .form-group { margin-bottom: 24px; }
+        .form-group.full-width { grid-column: span 2; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-color); font-size: 0.9rem; }
+        
+        .input-wrapper { position: relative; }
+        .input-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #94a3b8; transition: var(--transition); font-size: 1rem;}
+        .input-wrapper:has(textarea) .input-icon, textarea ~ .input-icon { top: 24px; transform: none; }
+
+        .form-control, .form-select, .form-textarea {
+            width: 100%; padding: 14px 18px 14px 45px; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px;
+            font-size: 0.95rem; color: var(--secondary-color); transition: var(--transition); font-family: inherit;
+        }
+        .form-control:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--primary-color); background-color: white; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
+        .form-control:focus + .input-icon, .form-select:focus + .input-icon, .form-textarea:focus + .input-icon { color: var(--primary-color); }
+        .form-textarea { resize: vertical; min-height: 120px; padding-top: 18px; }
+
+        /* Tombol Bawah (Footer Form) */
+        .form-footer { display: flex; justify-content: space-between; align-items: center; padding: 25px 35px; border-top: 1px dashed #e2e8f0; background-color: #f8fafc; border-radius: 0 0 20px 20px; }
+        
+        .btn-group { display: flex; gap: 12px; }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: white; border: none; padding: 14px 28px; border-radius: 12px;
+            font-weight: 600; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+            transition: var(--transition); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(59, 130, 246, 0.4); }
+        
+        .btn-outline {
+            background: white; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 12px 24px; border-radius: 12px;
+            font-weight: 600; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition);
+        }
+        .btn-outline:hover { background: #f0fdfa; transform: translateY(-2px); }
+
+        /* STICKY NOTE CP DEDY */
+        .sticky-note {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #fef9c3, #fef08a);
+            border-left: 5px solid #eab308;
+            padding: 18px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 99;
+            max-width: 280px;
+            color: #854d0e;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sticky-note-title { font-weight: 700; font-size: 1rem; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+        .sticky-note-text { font-size: 0.85rem; line-height: 1.5; margin-bottom: 10px;}
+        .sticky-note-badge { display: inline-block; background: #eab308; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;}
+        
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsiveness */
+        @media (max-width: 992px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.active { transform: translateX(0); }
             .main-content { margin-left: 0; }
-            .toggle-btn { display: block; }
-            .overlay.active { display: block; }
-        }
-
-        /* --- STYLING FORM PERMINTAAN --- */
-        main { padding: 30px; }
-
-        .content-wrapper {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        /* Bagian Kiri: Form */
-        .form-container {
-            flex: 2;
-            min-width: 300px;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
-
-        /* Bagian Kanan: Info/Guideline */
-        .info-container {
-            flex: 1;
-            min-width: 250px;
-            background: #e0f2fe; /* Light Blue */
-            padding: 30px;
-            border-radius: 12px;
-            height: fit-content;
-            border: 1px solid #bae6fd;
-        }
-
-        /* --- STYLE TOMBOL SECONDARY (Lihat Data) --- */
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: var(--secondary-color);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            border: 1px solid #cbd5e1;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-secondary:hover {
-            background-color: #cbd5e1;
-            color: #0f172a;
-        }
-        /* ----------------------------------------- */
-
-        h2 { color: var(--secondary-color); margin-bottom: 20px; font-size: 1.25rem; }
-        
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; margin-bottom: 8px; font-weight: 500; color: #475569; font-size: 0.9rem; }
-        
-        .input-wrapper { position: relative; }
-        .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
+            .toggle-btn { display: flex; align-items: center; justify-content: center;}
+            .form-footer { flex-direction: column; gap: 15px; }
+            .btn-group { width: 100%; display: flex; flex-direction: column;}
+            .btn-submit, .btn-outline { width: 100%; justify-content: center; }
+            .sticky-note { bottom: 20px; right: 20px; max-width: calc(100% - 40px); }
         }
         
-        .form-input, .form-select, .form-textarea {
-            width: 100%;
-            padding: 12px 15px 12px 45px; /* Space for icon */
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            background: #f8fafc;
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; gap: 0; }
+            .form-group.full-width { grid-column: auto; }
+            .content-area { padding: 20px; padding-bottom: 120px; }
         }
         
-        .form-textarea { padding-left: 15px; height: 100px; resize: vertical; }
-
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background: white;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .btn-submit {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-            transition: var(--transition);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-submit:hover { background-color: #1d4ed8; transform: translateY(-2px); }
-        .btn-submit:disabled { background-color: #94a3b8; cursor: not-allowed; transform: none; }
-
-        /* Style untuk Info Box */
-        .info-list { list-style: none; }
-        .info-list li {
-            display: flex; gap: 12px; margin-bottom: 15px; font-size: 0.9rem; color: #334155;
-        }
-        .info-icon { color: var(--primary-color); margin-top: 3px; }
-
+        /* Loading Overlay */
+        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; }
+        .spinner { width: 50px; height: 50px; border: 4px solid rgba(59, 130, 246, 0.2); border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
+        .loading-text { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; color: var(--secondary-color); font-size: 1.1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-
-    <div class="app-container">
-        <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
-
+    <div class="app-container" id="app-container">
+        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div style="display: flex; align-items: center;">
-                    <img src="logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/35'">
-                    <span class="logo-text">IT Dashboard</span>
+                    <img src="logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/42?text=HM'">
+                    <span class="logo-text">IT</span>
                 </div>
-                <button class="toggle-btn" onclick="toggleSidebar()" style="color: white; display: none;" id="closeSidebar">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button class="toggle-btn" id="close-sidebar" style="display: none;"><i class="fas fa-times"></i></button>
             </div>
-            
             <nav class="sidebar-menu">
-                <a href="index.html" class="menu-item">
-                    <i class="fas fa-tachometer-alt menu-icon"></i> <span class="menu-text">Dashboard</span>
-                </a>
-                <a href="dataunit.html" class="menu-item">
-                    <i class="fas fa-desktop menu-icon"></i> <span class="menu-text">Data Unit</span>
-                </a>
-                <a href="pengajuan.html" class="menu-item active">
-                    <i class="fas fa-boxes menu-icon"></i> <span class="menu-text">Permintaan Barang</span>
-                </a>
-                <a href="utility.html" class="menu-item">
-                    <i class="fas fa-tools menu-icon"></i> <span class="menu-text">Utility IT</span>
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-cog menu-icon"></i> <span class="menu-text">Pengaturan</span>
-                </a>
+                <a href="#" class="menu-item"><i class="fas fa-home menu-icon"></i> Dashboard</a>
+                <a href="pengajuan.html" class="menu-item active"><i class="fas fa-box-open menu-icon"></i> Pengajuan Barang</a>
+                <!-- Link Lihat Data juga ada di Sidebar untuk alternatif -->
+                <a href="URL_SPREADSHEET_ANDA" target="_blank" class="menu-item"><i class="fas fa-database menu-icon"></i> Lihat Data</a>
+                <a href="#" class="menu-item"><i class="fas fa-cogs menu-icon"></i> Pengaturan</a>
             </nav>
         </aside>
 
-        <div class="main-content">
+        <!-- Main Content -->
+        <main class="main-content">
             <header>
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <button class="toggle-btn" onclick="toggleSidebar()">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h3 style="margin:0; color: #334155;">Form Permintaan Barang</h3>
-                </div>
-                <div class="user-profile">
-                    <div class="user-avatar">
-                        <img src="dedi.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
-                    </div>
+                    <button class="toggle-btn" id="open-sidebar"><i class="fas fa-bars"></i></button>
+                    <h2 class="header-title">Pengajuan Barang</h2>
                 </div>
             </header>
 
-            <main>
-                <div class="content-wrapper">
+            <div class="content-area">
+                <div class="welcome-section">
+                    <h1 class="welcome-title">Permintaan Barang IT</h1>
+                    <p class="welcome-desc">Silakan lengkapi formulir di bawah ini untuk mengajukan kebutuhan perangkat atau barang IT di divisi Anda.</p>
+                </div>
+
+                <div class="form-card">
+                    <div class="form-header">
+                        <h3 class="form-title"><i class="fas fa-edit" style="color: var(--primary-color); margin-right: 10px;"></i>Formulir Pengajuan</h3>
+                    </div>
                     
-                    <div class="form-container">
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <h2 style="margin: 0;"><i class="fas fa-edit"></i> Isi Detail Permintaan</h2>
-                            <a href="lihat_data.html" class="btn-secondary">
-                                <i class="fas fa-list"></i> Lihat Data
-                            </a>
-                        </div>
-                        
-                        <form id="requestForm">
-                            
-                            <div class="form-group">
-                                <label class="form-label">Nama Pemohon</label>
-                                <div class="input-wrapper">
-                                    <i class="fas fa-user input-icon"></i>
-                                    <input type="text" name="nama" class="form-input" placeholder="Nama Lengkap Anda" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Divisi / Unit</label>
-                                <div class="input-wrapper">
-                                    <i class="fas fa-building input-icon"></i>
-                                    <select name="divisi" class="form-select" required>
-                                        <option value="" disabled selected>Pilih Divisi...</option>
-                                        <option value="Perawatrajal">Perawat Rawat Jalan</option>
-                                        <option value="Keuangan">Keuangan</option>
-                                        <option value="HRD">HRD</option>
-                                        <option value="Perawatranap">Perawat Rawat Inap</option>
-                                        <option value="Farmasi">Farmasi</option>
-                                        <option value="Radiologi">Radiologi</option>
-                                        <option value="Laboratorium">Laboratorium</option>
-                                        <option value="Administrasi">Administrasi</option>
-                                        <option value="Rekammedis">Casemix</option>
-                                        <option value="Gizi">Gizi</option>
-                                        <option value="Lainnya">Lainnya</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div style="display: flex; gap: 20px;">
-                                <div class="form-group" style="flex: 2;">
-                                    <label class="form-label">Nama Barang</label>
+                    <form id="permintaanForm" name="submit-to-google-sheet">
+                        <div class="form-body">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Nama Pemohon</label>
                                     <div class="input-wrapper">
-                                        <i class="fas fa-box input-icon"></i>
-                                        <input type="text" name="barang" class="form-input" placeholder="Contoh: Mouse Logitech" required>
+                                        <i class="fas fa-user input-icon"></i>
+                                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama lengkap" required>
                                     </div>
                                 </div>
-                                <div class="form-group" style="flex: 1;">
-                                    <label class="form-label">Jumlah</label>
+
+                                <div class="form-group">
+                                    <label class="form-label">Divisi / Unit</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-building input-icon"></i>
+                                        <input type="text" name="divisi" class="form-control" placeholder="Contoh: Keuangan, HRD, dll." required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Nama Barang / Spesifikasi</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-laptop input-icon"></i>
+                                        <input type="text" name="barang" class="form-control" placeholder="Contoh: Mouse Wireless Logitech" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Jumlah Barang</label>
                                     <div class="input-wrapper">
                                         <i class="fas fa-sort-numeric-up input-icon"></i>
-                                        <input type="number" name="jumlah" class="form-input" placeholder="0" min="1" required>
+                                        <input type="number" name="jumlah" class="form-control" placeholder="Masukkan angka" min="1" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label class="form-label">Tingkat Prioritas</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-exclamation-circle input-icon"></i>
+                                        <select name="prioritas" class="form-select" required>
+                                            <option value="" disabled selected>Pilih Tingkat Prioritas</option>
+                                            <option value="Tinggi">Tinggi (Mendesak)</option>
+                                            <option value="Sedang">Sedang (Dibutuhkan Segera)</option>
+                                            <option value="Rendah">Rendah (Dapat Ditunda)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label class="form-label">Keterangan / Alasan Kebutuhan</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-align-left input-icon"></i>
+                                        <textarea name="keterangan" class="form-textarea" placeholder="Jelaskan secara singkat mengapa barang ini dibutuhkan..." required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group full-width" style="margin-top: -10px;">
+                                    <label class="form-label">Masukan, Kritik & Saran <span style="color: var(--text-muted); font-weight: 400; font-size: 0.8rem;">(Opsional)</span></label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-comment-dots input-icon"></i>
+                                        <textarea name="saran" class="form-textarea" style="min-height: 90px;" placeholder="Beri kami masukan agar pelayanan IT semakin baik kedepannya..."></textarea>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Prioritas Kebutuhan</label>
-                                <div class="input-wrapper">
-                                    <i class="fas fa-exclamation-circle input-icon"></i>
-                                    <select name="prioritas" class="form-select" required>
-                                        <option value="Normal">Normal (3-5 Hari)</option>
-                                        <option value="Urgent">Urgent (Segera)</option>
-                                        <option value="Low">Low (Bisa ditunda)</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Keterangan / Alasan</label>
-                                <textarea name="keterangan" class="form-textarea" placeholder="Jelaskan spesifikasi atau alasan permintaan..."></textarea>
-                            </div>
-
-                            <button type="submit" class="btn-submit" id="btnSubmit">
-                                <i class="fas fa-paper-plane"></i> Kirim Permintaan
-                            </button>
-
-                        </form>
-                    </div>
-
-                    <div class="info-container">
-                        <h4 style="margin-bottom: 15px; color: #0369a1;"><i class="fas fa-info-circle"></i> Petunjuk</h4>
-                        <ul class="info-list">
-                            <li>
-                                <i class="fas fa-check-circle info-icon"></i>
-                                <span>Pastikan nama barang spesifik (Merk/Tipe) untuk mempercepat proses.</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-clock info-icon"></i>
-                                <span>Permintaan <strong>Urgent</strong> memerlukan persetujuan Kepala Unit.</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-history info-icon"></i>
-                                <span>Cek status permintaan Anda secara berkala di Dashboard.</span>
-                            </li>
-                        </ul>
-                        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #bae6fd;">
-                            <small style="color: #64748b;">Butuh bantuan?</small><br>
-                            <strong>CP : 085858369212(Dedy)</strong>
                         </div>
-                    </div>
-
+                        
+                        <div class="form-footer">
+                            <!-- Opsi Lihat Data dikembalikan ke Footer -->
+                            <a href="URL_SPREADSHEET_ANDA" target="_blank" class="btn-outline">
+                                <i class="fas fa-table"></i> Lihat Data
+                            </a>
+                            
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-paper-plane"></i> Kirim Pengajuan
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </main>
+            </div>
+        </main>
+    </div>
+
+    <!-- STICKY NOTE CP DEDY -->
+    <div class="sticky-note">
+        <div class="sticky-note-title">
+            <i class="fas fa-headset" style="color: #ca8a04;"></i> Butuh Bantuan?
+        </div>
+        <div class="sticky-note-text">
+            Bila ada masalah dalam pengisian form pengajuan ini, silakan hubungi IT .
+        </div>
+        <div class="sticky-note-badge">
+            <i class="fas fa-user-circle"></i> CP: Dedy
         </div>
     </div>
 
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Sedang mengirim data...</div>
+    </div>
+
     <script>
-        // --- 1. SCRIPT TOGGLE SIDEBAR ---
+        // Sidebar Toggle
+        const openBtn = document.getElementById('open-sidebar');
+        const closeBtn = document.getElementById('close-sidebar');
+        const sidebar = document.getElementById('sidebar');
+        const appContainer = document.getElementById('app-container');
+        const isMobile = () => window.innerWidth <= 992;
+
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const closeBtn = document.getElementById('closeSidebar');
             sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-            if (window.innerWidth <= 768) {
-                closeBtn.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
-            }
+            appContainer.classList.toggle('sidebar-open');
+            if (isMobile()) closeBtn.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
         }
 
-        // --- 2. SCRIPT KIRIM KE GOOGLE SHEET ---
+        openBtn.addEventListener('click', toggleSidebar);
+        closeBtn.addEventListener('click', toggleSidebar);
         
-        // PENTING: Pastikan ini adalah URL Deployment (Exec) yang benar dan aktif
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTwhjQJhB4YcsQk99dO1H0DJJpLa3pDm_G0R0NBKdrY4XNLVbDYv_iQbHaURXuIGqhDA/exec';
-
-        const form = document.getElementById('requestForm');
-        const btnSubmit = document.getElementById('btnSubmit');
+        // Submit Logic
+        const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; // Ganti link Script Anda
+        const form = document.forms['submit-to-google-sheet'];
+        const loadingOverlay = document.getElementById('loading-overlay');
 
         form.addEventListener('submit', e => {
             e.preventDefault();
+            loadingOverlay.style.display = 'flex';
 
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: new FormData(form)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
-                }
-
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Permintaan';
-                
-                form.reset();
-
-                Swal.fire({
-                    title: 'Berhasil!',
-                    text: 'Permintaan barang telah dikirim ke Bagian Umum & Keuangan.',
-                    icon: 'success',
-                    confirmButtonColor: '#2563eb'
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    loadingOverlay.style.display = 'none';
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pengajuan Berhasil!',
+                        text: 'Permintaan barang dan saran Anda telah tersimpan.',
+                        confirmButtonColor: '#3b82f6',
+                        customClass: { popup: 'rounded-xl' }
+                    });
+                    form.reset();
+                })
+                .catch(error => {
+                    loadingOverlay.style.display = 'none';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan saat mengirim data!',
+                        confirmButtonColor: '#ef4444',
+                    });
                 });
-            })
-            .catch(error => {
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Permintaan';
-                
-                Swal.fire({
-                    title: 'Gagal!',
-                    text: 'Terjadi kesalahan jaringan atau server. Coba lagi.',
-                    icon: 'error'
-                });
-                console.error('Error Details:', error);
-            });
         });
     </script>
 </body>
