@@ -1,398 +1,317 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Laporan IT - Hasna Medika</title>
+    <title>Overview - ProcureIT Dashboard</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
-        /* --- RESET & VARIABLES --- */
+        /* --- DESIGN SYSTEM (SHARED) --- */
         :root {
-            --primary-color: #2563eb; /* Biru Modern */
-            --secondary-color: #1e293b; /* Dark Blue untuk Sidebar */
-            --bg-color: #f1f5f9; /* Abu-abu sangat muda untuk background */
-            --text-color: #334155;
-            --card-bg: #ffffff;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --sidebar-width: 260px;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            text-decoration: none;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
-        /* --- LAYOUT UTAMA --- */
-        .app-container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--secondary-color);
-            color: white;
-            position: fixed;
-            height: 100vh;
-            left: 0;
-            top: 0;
-            transition: var(--transition);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .brand-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo {
-            width: 35px;
-            height: 35px;
-            background: white; /* Placeholder jika logo transparan */
-            border-radius: 8px;
-            object-fit: cover;
-        }
-
-        .logo-text {
-            font-weight: 600;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-        }
-
-        .sidebar-menu {
-            padding: 20px 0;
-            flex: 1;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 25px;
-            color: #94a3b8;
-            transition: var(--transition);
-            border-left: 3px solid transparent;
-        }
-
-        .menu-item:hover, .menu-item.active {
-            background-color: rgba(255,255,255,0.05);
-            color: white;
-            border-left-color: var(--primary-color);
-        }
-
-        .menu-icon {
-            width: 25px;
-            font-size: 1.1rem;
-            margin-right: 10px;
-        }
-
-        /* --- MAIN CONTENT --- */
-        .main-content {
-            flex: 1;
-            margin-left: var(--sidebar-width);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* --- HEADER --- */
-        header {
-            background-color: var(--card-bg);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 90;
-        }
-
-        .toggle-btn {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--text-color);
-            display: none; /* Hidden on desktop by default */
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-        }
-
-        .user-avatar img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-        }
-
-        .user-name {
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        /* --- DASHBOARD CONTENT --- */
-        main {
-            padding: 30px;
-        }
-
-        /* Filter Section */
-        .filter-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .filter-section h2 {
-            font-size: 1.5rem;
-            color: var(--secondary-color);
-        }
-
-        select#reportType {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid #cbd5e1;
-            background-color: white;
-            font-size: 0.95rem;
-            cursor: pointer;
-            outline: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        /* Cards Grid */
-        .report-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .report-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            border-top: 4px solid var(--primary-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Warna khusus untuk tiap jenis kartu */
-        .report-card.hardware { border-top-color: var(--danger); }
-        .report-card.software { border-top-color: var(--primary-color); }
-        .report-card.report { border-top-color: var(--success); }
-
-        .report-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .report-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            color: var(--secondary-color);
-        }
-
-        .report-card p {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .card-icon-bg {
-            position: absolute;
-            right: -10px;
-            bottom: -10px;
-            font-size: 5rem;
-            opacity: 0.05;
-            color: var(--text-color);
-        }
-
-        .btn-card {
-            align-self: flex-start;
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: none;
-            background-color: #f1f5f9;
-            color: var(--text-color);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-card:hover {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        /* --- RESPONSIVE MOBILE --- */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .toggle-btn {
-                display: block;
-            }
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --primary-light: #e0e7ff;
+            --surface: #ffffff;
+            --background: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
             
-            .header-title {
-                display: none; /* Hide empty title on mobile to save space */
-            }
+            --success: #10b981;
+            --success-bg: #d1fae5;
+            --warning: #f59e0b;
+            --warning-bg: #fef3c7;
+            --danger: #ef4444;
+            --danger-bg: #fee2e2;
+            --info: #3b82f6;
+            --info-bg: #dbeafe;
+
+            --sidebar-w: 280px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #6366f1;
+            --primary-hover: #818cf8;
+            --primary-light: rgba(99, 102, 241, 0.2);
+            --surface: #1e293b;
+            --background: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            
+            --success-bg: rgba(16, 185, 129, 0.2);
+            --warning-bg: rgba(245, 158, 11, 0.2);
+            --danger-bg: rgba(239, 68, 68, 0.2);
+            --info-bg: rgba(59, 130, 246, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--background); color: var(--text-main); transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; background: none; font-family: inherit; }
+        
+        /* Layout */
+        .app-layout { display: flex; min-height: 100vh; }
+        
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-w); background-color: var(--surface); border-right: 1px solid var(--border);
+            position: fixed; height: 100vh; left: 0; top: 0; display: flex; flex-direction: column;
+            transition: var(--transition); z-index: 50;
+        }
+        .sidebar-header { padding: 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), #818cf8); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .brand-text { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.5px; color: var(--text-main); }
+        .sidebar-nav { padding: 24px 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); color: var(--text-muted); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .nav-item:hover { background-color: var(--primary-light); color: var(--primary); transform: translateX(4px); }
+        .nav-item.active { background-color: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .nav-icon { font-size: 1.2rem; width: 24px; text-align: center; }
+        
+        /* Main Content */
+        .main-content { flex: 1; margin-left: var(--sidebar-w); display: flex; flex-direction: column; transition: var(--transition); width: calc(100% - var(--sidebar-w)); }
+        
+        /* Header */
+        .top-header { background-color: rgba(var(--surface), 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 40; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .mobile-toggle { display: none; font-size: 1.5rem; color: var(--text-main); }
+        .page-title-text { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
+        
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .action-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); background-color: var(--background); transition: var(--transition); border: 1px solid var(--border); }
+        .action-btn:hover { color: var(--primary); border-color: var(--primary); transform: rotate(15deg); }
+        
+        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 4px 12px 4px 4px; border-radius: var(--radius-full); border: 1px solid var(--border); transition: var(--transition); }
+        .user-profile:hover { background-color: var(--background); }
+        .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
+        .user-info { display: flex; flex-direction: column; }
+        .user-name { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        .user-role { font-size: 0.75rem; color: var(--text-muted); }
+        
+        /* Dashboard Content */
+        .dashboard-body { padding: 32px; display: flex; flex-direction: column; gap: 32px; }
+        
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+        .section-title { font-size: 1.5rem; font-weight: 700; color: var(--text-main); }
+        
+        .filter-select {
+            padding: 10px 16px; border-radius: var(--radius-md); border: 1px solid var(--border);
+            background-color: var(--surface); color: var(--text-main); font-size: 0.95rem; cursor: pointer; outline: none;
+        }
+
+        /* Modules Grid */
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        
+        .module-card {
+            background-color: var(--surface); border-radius: var(--radius-lg); padding: 32px;
+            border: 1px solid var(--border); box-shadow: var(--shadow-md);
+            display: flex; flex-direction: column; justify-content: space-between;
+            position: relative; overflow: hidden; transition: var(--transition);
+            min-height: 240px;
+        }
+        
+        .module-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+        }
+        .module-card.unit::before { background-color: var(--danger); }
+        .module-card.request::before { background-color: var(--primary); }
+        .module-card.utility::before { background-color: var(--success); }
+        
+        .module-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        
+        .module-icon-bg { position: absolute; right: -15px; bottom: -20px; font-size: 8rem; opacity: 0.03; color: var(--text-main); transition: var(--transition); pointer-events: none; }
+        .module-card:hover .module-icon-bg { transform: scale(1.1) rotate(-5deg); opacity: 0.05; }
+        
+        .module-content { position: relative; z-index: 2; }
+        .module-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+        .module-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; }
+        
+        .btn-outline {
+            align-self: flex-start; padding: 10px 20px; border-radius: var(--radius-full);
+            background: transparent; border: 1px solid var(--border); color: var(--text-main);
+            font-weight: 600; font-size: 0.9rem; transition: var(--transition);
+            display: inline-flex; align-items: center; gap: 8px; z-index: 2;
+        }
+        
+        .module-card.unit .btn-outline:hover { background-color: var(--danger); border-color: var(--danger); color: white; }
+        .module-card.request .btn-outline:hover { background-color: var(--primary); border-color: var(--primary); color: white; }
+        .module-card.utility .btn-outline:hover { background-color: var(--success); border-color: var(--success); color: white; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); box-shadow: var(--shadow-lg); }
+            .main-content { margin-left: 0; width: 100%; }
+            .mobile-toggle { display: block; }
+            .dashboard-body { padding: 20px; }
+            .top-header { padding: 16px 20px; }
+            .page-title-text { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="app-layout">
+        
+        <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div class="brand-wrapper">
-                    <img src="logo.png" alt="IT" class="logo" onerror="this.src='https://via.placeholder.com/35'">
-                    <span class="logo-text">IT Dashboard</span>
+                <div class="brand">
+                    <div class="brand-icon"><i class="fas fa-bolt"></i></div>
+                    <span class="brand-text">ProcureIT</span>
                 </div>
-                <button class="toggle-btn" onclick="toggleSidebar()" style="color: white; display: none;" id="closeSidebar">
+                <button class="mobile-toggle" onclick="toggleSidebar()" style="display: none;" id="closeSidebarBtn">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <nav class="sidebar-menu">
-                <a href="#" class="menu-item active">
-                    <i class="fas fa-tachometer-alt menu-icon"></i>
-                    <span class="menu-text">Dashboard</span>
-                </a>
-                <a href="dataunit.html" class="menu-item">
-                    <i class="fas fa-desktop menu-icon"></i>
-                    <span class="menu-text">Data Unit</span>
-                </a>
-                <a href="pengajuan.html" class="menu-item">
-                    <i class="fas fa-boxes menu-icon"></i>
-                    <span class="menu-text">Permintaan Barang</span>
-                </a>
-                <a href="utility.html" class="menu-item">
-                    <i class="fas fa-tools menu-icon"></i>
-                    <span class="menu-text">Utility IT</span>
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-cog menu-icon"></i>
-                    <span class="menu-text">Pengaturan</span>
-                </a>
-            </nav>
+            <ul class="sidebar-nav">
+                <li><a href="index.html" class="nav-item active"><i class="fas fa-home nav-icon"></i> Overview</a></li>
+                <li><a href="dataunit.html" class="nav-item"><i class="fas fa-desktop nav-icon"></i> Data Unit</a></li>
+                <li><a href="pengajuan.html" class="nav-item"><i class="fas fa-box-open nav-icon"></i> Pengajuan Barang</a></li>
+                <li><a href="lihat_data.html" class="nav-item"><i class="fas fa-table nav-icon"></i> Semua Data</a></li>
+                <li><a href="utility.html" class="nav-item"><i class="fas fa-tools nav-icon"></i> Utility IT</a></li>
+            </ul>
         </aside>
 
-        <div class="main-content">
-            <header>
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <button class="toggle-btn" onclick="toggleSidebar()">
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            
+            <!-- HEADER -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-toggle" onclick="toggleSidebar()">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <div class="header-title">
-                        <h4 style="margin:0; color: #64748b;">Welcome</h4>
-                    </div>
+                    <h2 class="page-title-text">Dashboard Overview</h2>
                 </div>
-
-                <div class="user-profile">
-                    <div class="user-avatar">
-                        <img src="dedi.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
+                
+                <div class="header-right">
+                    <button class="action-btn" onclick="toggleTheme()" title="Toggle Dark Mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <div class="user-profile">
+                        <img src="dedi.jpg" alt="User" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Admin+IT&background=4f46e5&color=fff'">
+                        <div class="user-info">
+                            <span class="user-name">Admin IT</span>
+                            <span class="user-role">IT Support</span>
+                        </div>
                     </div>
-                    <span class="user-name">Dedi Suartana</span>
                 </div>
             </header>
 
-            <main>
-                <section class="filter-section">
-                    <h2>Overview Laporan</h2>
-                    <select id="reportType" onchange="filterReports()">
-                        <option value="all">Tampilkan Semua</option>
-                        <option value="hardware">Laporan Data Unit</option>
-                        <option value="software">Laporan Permintaan Barang IT</option>
-                        <option value="report">Utility IT</option>
-                    </select>
-                </section>
-
-                <section class="report-container" id="reportContainer">
-                    
-                    <div class="report-card hardware" data-category="hardware">
-                        <i class="fas fa-desktop card-icon-bg"></i>
-                        <div>
-                            <h3>Laporan Data Unit</h3>
-                            <p>Monitoring kerusakan hardware, PC, Printer, dan jaringan.</p>
-                        </div>
-                        <button class="btn-card" onclick="window.location.href='dataunit.html'">Input Laporan <i class="fas fa-arrow-right"></i></button>
+            <!-- DASHBOARD CONTENT -->
+            <div class="dashboard-body">
+                
+                <div>
+                    <div class="section-header">
+                        <h1 class="section-title">Modul Sistem IT</h1>
+                        <select class="filter-select" id="reportType" onchange="filterModules()">
+                            <option value="all">Tampilkan Semua Modul</option>
+                            <option value="unit">Modul Data Unit</option>
+                            <option value="request">Modul Pengajuan</option>
+                            <option value="utility">Modul Utility</option>
+                        </select>
                     </div>
 
-                    <div class="report-card software" data-category="software">
-                        <i class="fas fa-memory card-icon-bg"></i>
-                        <div>
-                            <h3>Permintaan Barang IT</h3>
-                            <p>Form pengajuan pengadaan sparepart atau perlengkapan IT baru.</p>
+                    <div class="modules-grid" id="moduleContainer">
+                        
+                        <div class="module-card unit" data-category="unit">
+                            <i class="fas fa-desktop module-icon-bg"></i>
+                            <div class="module-content">
+                                <h3 class="module-title">Laporan Data Unit</h3>
+                                <p class="module-desc">Monitoring pemeliharaan, kerusakan hardware, PC, Printer, dan jaringan setiap unit secara berkala.</p>
+                            </div>
+                            <button class="btn-outline" onclick="window.location.href='dataunit.html'">Akses Modul <i class="fas fa-arrow-right"></i></button>
                         </div>
-                        <button class="btn-card" onclick="window.location.href='pengajuan.html'">Buat Pengajuan <i class="fas fa-arrow-right"></i></button>
-                    </div>
 
-                    <div class="report-card report" data-category="report">
-                        <i class="fas fa-chart-pie card-icon-bg"></i>
-                        <div>
-                            <h3>Utility IT</h3>
-                            <p>Data utility dan repository IT.</p>
+                        <div class="module-card request" data-category="request">
+                            <i class="fas fa-box-open module-icon-bg"></i>
+                            <div class="module-content">
+                                <h3 class="module-title">Permintaan Barang IT</h3>
+                                <p class="module-desc">Portal manajemen formulir pengajuan pengadaan sparepart, ATK, atau perlengkapan IT baru.</p>
+                            </div>
+                            <button class="btn-outline" onclick="window.location.href='pengajuan.html'">Akses Modul <i class="fas fa-arrow-right"></i></button>
                         </div>
-                        <button class="btn-card" onclick="window.location.href='utility.html'">Lihat Data <i class="fas fa-arrow-right"></i></button>
-                    </div>
 
-                </section>
-            </main>
-        </div>
+                        <div class="module-card utility" data-category="utility">
+                            <i class="fas fa-tools module-icon-bg"></i>
+                            <div class="module-content">
+                                <h3 class="module-title">Utility & Repository</h3>
+                                <p class="module-desc">Akses cepat ke penyimpanan master software, backup driver, aset desain, dan manajemen jaringan lokal.</p>
+                            </div>
+                            <button class="btn-outline" onclick="window.location.href='utility.html'">Akses Modul <i class="fas fa-arrow-right"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
     </div>
 
-    <script src="scripts.js"></script>
-      
+    <script>
+        // --- THEME MANAGEMENT ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.getAttribute('data-theme') === 'light') {
+                html.setAttribute('data-theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // --- SIDEBAR TOGGLE ---
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            const closeBtn = document.getElementById('closeSidebarBtn');
+            if (window.innerWidth <= 768) {
+                closeBtn.style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
+            }
+        }
+
+        // --- FILTER MODULES ---
+        function filterModules() {
+            const filterValue = document.getElementById('reportType').value;
+            const cards = document.querySelectorAll('.module-card');
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                if (filterValue === 'all') {
+                    card.style.display = 'flex';
+                } else {
+                    if (category === filterValue) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>

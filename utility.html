@@ -1,294 +1,323 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utility & Resource - IT Support</title>
+    <title>Utility & Repository - ProcureIT Dashboard</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
+        /* --- DESIGN SYSTEM (SHARED) --- */
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e293b;
-            --bg-color: #f1f5f9;
-            --text-color: #334155;
-            --card-bg: #ffffff;
-            --sidebar-width: 260px;
-            --transition: all 0.3s ease;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --primary-light: #e0e7ff;
+            --surface: #ffffff;
+            --background: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            
+            --success: #10b981;
+            --success-bg: #d1fae5;
+            --warning: #f59e0b;
+            --warning-bg: #fef3c7;
+            --danger: #ef4444;
+            --danger-bg: #fee2e2;
+            --info: #3b82f6;
+            --info-bg: #dbeafe;
+
+            --sidebar-w: 280px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-decoration: none; }
-        body { background-color: var(--bg-color); color: var(--text-color); }
+        [data-theme="dark"] {
+            --primary: #6366f1;
+            --primary-hover: #818cf8;
+            --primary-light: rgba(99, 102, 241, 0.2);
+            --surface: #1e293b;
+            --background: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            
+            --success-bg: rgba(16, 185, 129, 0.2);
+            --warning-bg: rgba(245, 158, 11, 0.2);
+            --danger-bg: rgba(239, 68, 68, 0.2);
+            --info-bg: rgba(59, 130, 246, 0.2);
+        }
 
-        /* Layout & Sidebar */
-        .app-container { display: flex; min-height: 100vh; position: relative; }
-        .sidebar { width: var(--sidebar-width); background-color: var(--secondary-color); color: white; position: fixed; height: 100vh; left: 0; top: 0; transition: var(--transition); z-index: 100; display: flex; flex-direction: column; }
-        .sidebar-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { width: 35px; height: 35px; background: white; border-radius: 8px; object-fit: cover; }
-        .logo-text { font-weight: 600; font-size: 1.1rem; margin-left: 10px; }
-        .sidebar-menu { padding: 20px 0; flex: 1; }
-        .menu-item { display: flex; align-items: center; padding: 12px 25px; color: #94a3b8; transition: var(--transition); border-left: 3px solid transparent; }
-        .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.05); color: white; border-left-color: var(--primary-color); }
-        .menu-icon { width: 25px; font-size: 1.1rem; margin-right: 10px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--background); color: var(--text-main); transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; background: none; font-family: inherit; }
         
-        .main-content { flex: 1; margin-left: var(--sidebar-width); transition: var(--transition); display: flex; flex-direction: column; width: 100%; min-height: 100vh; }
-        header { background-color: var(--card-bg); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 90; }
-        .toggle-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); display: none; }
-        .user-profile { display: flex; align-items: center; gap: 12px; }
-        .user-avatar img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color); }
-
-        /* Overlay untuk Mobile saat sidebar aktif */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 95;
-            transition: var(--transition);
-            opacity: 0;
-        }
-        .overlay.active { display: block; opacity: 1; }
-
-        /* --- STYLING KHUSUS HALAMAN UTILITY --- */
-        main { padding: 30px; }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        /* Layout */
+        .app-layout { display: flex; min-height: 100vh; }
         
-        /* Tambahan margin top untuk section pertama */
-        .section-title:first-child { margin-top: 10px; }
-
-        .utility-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-w); background-color: var(--surface); border-right: 1px solid var(--border);
+            position: fixed; height: 100vh; left: 0; top: 0; display: flex; flex-direction: column;
+            transition: var(--transition); z-index: 50;
         }
-
+        .sidebar-header { padding: 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), #818cf8); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .brand-text { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.5px; color: var(--text-main); }
+        .sidebar-nav { padding: 24px 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); color: var(--text-muted); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        .nav-item:hover { background-color: var(--primary-light); color: var(--primary); transform: translateX(4px); }
+        .nav-item.active { background-color: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .nav-icon { font-size: 1.2rem; width: 24px; text-align: center; }
+        
+        /* Main Content */
+        .main-content { flex: 1; margin-left: var(--sidebar-w); display: flex; flex-direction: column; transition: var(--transition); width: calc(100% - var(--sidebar-w)); }
+        
+        /* Header */
+        .top-header { background-color: rgba(var(--surface), 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 40; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .mobile-toggle { display: none; font-size: 1.5rem; color: var(--text-main); }
+        .page-title-text { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
+        
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .action-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); background-color: var(--background); transition: var(--transition); border: 1px solid var(--border); }
+        .action-btn:hover { color: var(--primary); border-color: var(--primary); transform: rotate(15deg); }
+        
+        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 4px 12px 4px 4px; border-radius: var(--radius-full); border: 1px solid var(--border); transition: var(--transition); }
+        .user-profile:hover { background-color: var(--background); }
+        .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
+        .user-info { display: flex; flex-direction: column; }
+        .user-name { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        .user-role { font-size: 0.75rem; color: var(--text-muted); }
+        
+        /* Dashboard Content */
+        .dashboard-body { padding: 32px; display: flex; flex-direction: column; gap: 40px; }
+        
+        .section-header { margin-bottom: 24px; }
+        .section-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 12px; }
+        .section-title i { color: var(--primary); font-size: 1.5rem; }
+        
+        .utility-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+        
         .file-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            border: 1px solid #f1f5f9;
-            position: relative;
-            overflow: hidden;
+            background: var(--surface); border-radius: var(--radius-lg); padding: 24px;
+            border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+            display: flex; align-items: flex-start; gap: 20px;
+            transition: var(--transition); position: relative; overflow: hidden;
             cursor: pointer;
         }
-
-        .file-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1);
-            border-color: var(--primary-color);
-        }
-
+        
+        .file-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--primary-light); }
+        
         .icon-box {
-            width: 50px; height: 50px; border-radius: 12px;
+            width: 56px; height: 56px; border-radius: var(--radius-md);
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; flex-shrink: 0;
+            font-size: 1.8rem; flex-shrink: 0;
         }
-
-        .bg-drive { background-color: #e0f2fe; color: #0284c7; }
-        .bg-folder { background-color: #fef3c7; color: #d97706; }
-        .bg-pdf { background-color: #fee2e2; color: #dc2626; }
-        .bg-app { background-color: #dcfce7; color: #166534; }
-        .bg-local { background-color: #f3e8ff; color: #7e22ce; }
-
-        .card-content h4 { font-size: 1rem; color: var(--secondary-color); margin-bottom: 5px; }
-        .card-content p { font-size: 0.85rem; color: #64748b; line-height: 1.4; }
-
-        .action-arrow {
-            position: absolute; bottom: 20px; right: 20px;
-            color: #cbd5e1; transition: var(--transition);
-        }
-        .file-card:hover .action-arrow { color: var(--primary-color); transform: translateX(5px); }
-
-        /* Badge untuk IP Lokal */
+        
+        .bg-drive { background-color: var(--info-bg); color: var(--info); }
+        .bg-folder { background-color: var(--warning-bg); color: var(--warning); }
+        .bg-app { background-color: var(--success-bg); color: var(--success); }
+        .bg-local { background-color: rgba(147, 51, 234, 0.1); color: #9333ea; }
+        
+        .card-content { flex: 1; }
+        .card-content h4 { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .card-content p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0; }
+        
+        .action-arrow { position: absolute; bottom: 24px; right: 24px; color: var(--border); transition: var(--transition); font-size: 1.2rem; }
+        .file-card:hover .action-arrow { color: var(--primary); transform: translateX(5px); }
+        
         .badge-local {
-            display: inline-block;
-            font-size: 0.7rem;
-            background: #f1f5f9;
-            color: #64748b;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-top: 8px;
-            border: 1px solid #e2e8f0;
-            font-family: monospace;
+            display: inline-block; font-size: 0.75rem; font-family: monospace; font-weight: 600;
+            background: var(--background); color: var(--text-muted);
+            padding: 4px 10px; border-radius: var(--radius-full); margin-top: 12px;
+            border: 1px solid var(--border);
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
-            .sidebar.active { transform: translateX(0); }
-            .main-content { margin-left: 0; }
-            .toggle-btn { display: block; }
+            .sidebar.active { transform: translateX(0); box-shadow: var(--shadow-lg); }
+            .main-content { margin-left: 0; width: 100%; }
+            .mobile-toggle { display: block; }
+            .dashboard-body { padding: 20px; gap: 30px; }
+            .top-header { padding: 16px 20px; }
+            .page-title-text { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
-
+    <div class="app-layout">
+        
+        <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div style="display: flex; align-items: center;">
-                    <img src="logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/35'">
-                    <span class="logo-text">IT Dashboard</span>
+                <div class="brand">
+                    <div class="brand-icon"><i class="fas fa-bolt"></i></div>
+                    <span class="brand-text">ProcureIT</span>
                 </div>
-                <button class="toggle-btn" onclick="toggleSidebar()" style="color: white; display: none;" id="closeSidebar">
+                <button class="mobile-toggle" onclick="toggleSidebar()" style="display: none;" id="closeSidebarBtn">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <nav class="sidebar-menu">
-                <a href="index.html" class="menu-item">
-                    <i class="fas fa-tachometer-alt menu-icon"></i>
-                    <span class="menu-text">Dashboard</span>
-                </a>
-                <a href="dataunit.html" class="menu-item">
-                    <i class="fas fa-desktop menu-icon"></i>
-                    <span class="menu-text">Data Unit</span>
-                </a>
-                <a href="pengajuan.html" class="menu-item">
-                    <i class="fas fa-boxes menu-icon"></i>
-                    <span class="menu-text">Permintaan Barang</span>
-                </a>
-                <a href="utility.html" class="menu-item active">
-                    <i class="fas fa-tools menu-icon"></i> 
-                    <span class="menu-text">Utility IT</span>
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-cog menu-icon"></i>
-                    <span class="menu-text">Pengaturan</span>
-                </a>
-            </nav>
+            <ul class="sidebar-nav">
+                <li><a href="index.html" class="nav-item"><i class="fas fa-home nav-icon"></i> Overview</a></li>
+                <li><a href="dataunit.html" class="nav-item"><i class="fas fa-desktop nav-icon"></i> Data Unit</a></li>
+                <li><a href="pengajuan.html" class="nav-item"><i class="fas fa-box-open nav-icon"></i> Pengajuan Barang</a></li>
+                <li><a href="lihat_data.html" class="nav-item"><i class="fas fa-table nav-icon"></i> Semua Data</a></li>
+                <li><a href="utility.html" class="nav-item active"><i class="fas fa-tools nav-icon"></i> Utility IT</a></li>
+            </ul>
         </aside>
 
-        <div class="main-content">
-            <header>
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <button class="toggle-btn" onclick="toggleSidebar()">
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            
+            <!-- HEADER -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-toggle" onclick="toggleSidebar()">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <h3 style="margin:0; color: #334155;">Utility & Repository</h3>
+                    <h2 class="page-title-text">Utility & Repository</h2>
                 </div>
-                <div class="user-profile">
-                    <div class="user-avatar">
-                        <img src="dedi.jpg" alt="Profile Dedi Suartana" onerror="this.src='https://ui-avatars.com/api/?name=Dedi+Suartana&background=2563eb&color=fff'">
+                
+                <div class="header-right">
+                    <button class="action-btn" onclick="toggleTheme()" title="Toggle Dark Mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <div class="user-profile">
+                        <img src="dedi.jpg" alt="User" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Admin+IT&background=4f46e5&color=fff'">
+                        <div class="user-info">
+                            <span class="user-name">Admin IT</span>
+                            <span class="user-role">IT Support</span>
+                        </div>
                     </div>
                 </div>
             </header>
 
-            <main>
-                <div class="section-title">
-                    <i class="fab fa-google-drive" style="color: #0284c7;"></i> Cloud Storage & Master Data
-                </div>
+            <!-- DASHBOARD CONTENT -->
+            <div class="dashboard-body">
                 
-                <section class="utility-grid">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
-                        <div class="icon-box bg-drive">
-                            <i class="fab fa-google-drive"></i>
-                        </div>
-                        <div class="card-content">
-                            <h4>Master Software</h4>
-                            <p>Repository file ISO Windows, Office, dan Installer aplikasi umum.</p>
-                        </div>
-                        <i class="fas fa-arrow-right action-arrow"></i>
-                    </a>
+                <div>
+                    <div class="section-header">
+                        <h3 class="section-title"><i class="fab fa-google-drive" style="color: var(--info);"></i> Cloud Storage & Master Data</h3>
+                    </div>
+                    
+                    <section class="utility-grid">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
+                            <div class="icon-box bg-drive">
+                                <i class="fab fa-google-drive"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Master Software</h4>
+                                <p>Repository file ISO Windows, Office, dan Installer aplikasi umum terpusat.</p>
+                            </div>
+                            <i class="fas fa-arrow-right action-arrow"></i>
+                        </a>
 
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
-                        <div class="icon-box bg-drive">
-                            <i class="fas fa-hdd"></i>
-                        </div>
-                        <div class="card-content">
-                            <h4>Backup Driver PC</h4>
-                            <p>Kumpulan driver printer, scanner, dan PC Unit.</p>
-                        </div>
-                        <i class="fas fa-arrow-right action-arrow"></i>
-                    </a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
+                            <div class="icon-box bg-drive">
+                                <i class="fas fa-hdd"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Backup Driver PC</h4>
+                                <p>Kumpulan cadangan driver printer, scanner, dan perangkat keras Unit.</p>
+                            </div>
+                            <i class="fas fa-arrow-right action-arrow"></i>
+                        </a>
 
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
-                        <div class="icon-box bg-folder">
-                            <i class="fas fa-images"></i>
-                        </div>
-                        <div class="card-content">
-                            <h4>Aset Desain & Logo</h4>
-                            <p>Logo resmi, Template Surat, dan aset grafis lainnya.</p>
-                        </div>
-                        <i class="fas fa-arrow-right action-arrow"></i>
-                    </a>
-                </section>
-
-                <div class="section-title">
-                    <i class="fas fa-network-wired" style="color: #7e22ce;"></i> Local Network & Tools
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="file-card">
+                            <div class="icon-box bg-folder">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Aset Desain & Logo</h4>
+                                <p>Logo resmi, Template Surat, dokumen standar dan aset grafis perusahaan.</p>
+                            </div>
+                            <i class="fas fa-arrow-right action-arrow"></i>
+                        </a>
+                    </section>
                 </div>
 
-                <section class="utility-grid">
-                    <a href="#" class="file-card">
-                        <div class="icon-box bg-local">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <div class="card-content">
-                            <h4>Proxmox VE Server</h4>
-                            <p>Manajemen virtual mesin dan server lokal.</p>
-                            <span class="badge-local">192.168.1.10:8006</span>
-                        </div>
-                        <i class="fas fa-external-link-alt action-arrow"></i>
-                    </a>
+                <div>
+                    <div class="section-header">
+                        <h3 class="section-title"><i class="fas fa-network-wired" style="color: #9333ea;"></i> Local Network & Server</h3>
+                    </div>
 
-                    <a href="#" class="file-card">
-                        <div class="icon-box bg-app">
-                            <i class="fas fa-wifi"></i>
-                        </div>
-                        <div class="card-content">
-                            <h4>Router Mikrotik</h4>
-                            <p>WebFig login untuk manajemen bandwidth dan jaringan.</p>
-                            <span class="badge-local">192.168.88.1</span>
-                        </div>
-                        <i class="fas fa-external-link-alt action-arrow"></i>
-                    </a>
-                </section>
+                    <section class="utility-grid">
+                        <a href="#" class="file-card">
+                            <div class="icon-box bg-local">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Proxmox VE Server</h4>
+                                <p>Akses manajemen kontrol untuk virtual mesin dan server lokal.</p>
+                                <div class="badge-local">192.168.1.10:8006</div>
+                            </div>
+                            <i class="fas fa-external-link-alt action-arrow"></i>
+                        </a>
 
-            </main>
-        </div>
+                        <a href="#" class="file-card">
+                            <div class="icon-box bg-app">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Router Mikrotik</h4>
+                                <p>Akses WebFig untuk manajemen bandwidth dan topologi jaringan.</p>
+                                <div class="badge-local">192.168.88.1</div>
+                            </div>
+                            <i class="fas fa-external-link-alt action-arrow"></i>
+                        </a>
+                    </section>
+                </div>
+
+            </div>
+        </main>
     </div>
 
     <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const closeBtn = document.getElementById('closeSidebar');
-
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-
-            // Mengatur visibilitas tombol close berdasarkan lebar layar dan status sidebar
-            if (window.innerWidth <= 768) {
-                closeBtn.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+        // --- THEME MANAGEMENT ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.getAttribute('data-theme') === 'light') {
+                html.setAttribute('data-theme', 'dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
             }
         }
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
+        }
 
-        // Menutup sidebar otomatis jika ukuran layar diperbesar (resize ke desktop mode)
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                document.getElementById('sidebar').classList.remove('active');
-                document.getElementById('overlay').classList.remove('active');
-                document.getElementById('closeSidebar').style.display = 'none';
+        // --- SIDEBAR TOGGLE ---
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            const closeBtn = document.getElementById('closeSidebarBtn');
+            if (window.innerWidth <= 768) {
+                closeBtn.style.display = document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
             }
-        });
+        }
     </script>
 </body>
 </html>
