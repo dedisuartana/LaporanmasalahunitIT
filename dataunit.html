@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Unit - ProcureIT Dashboard</title>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -19,7 +21,7 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border: #e2e8f0;
-            
+
             --success: #10b981;
             --success-bg: #d1fae5;
             --warning: #f59e0b;
@@ -33,11 +35,11 @@
             --radius-md: 12px;
             --radius-lg: 20px;
             --radius-full: 9999px;
-            
+
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            
+
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -50,140 +52,486 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border: #334155;
-            
+
             --success-bg: rgba(16, 185, 129, 0.2);
             --warning-bg: rgba(245, 158, 11, 0.2);
             --danger-bg: rgba(239, 68, 68, 0.2);
             --info-bg: rgba(59, 130, 246, 0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--background); color: var(--text-main); transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; }
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        button { cursor: pointer; border: none; background: none; font-family: inherit; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
         /* Layout */
-        .app-layout { display: flex; min-height: 100vh; }
-        
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
         /* Sidebar */
         .sidebar {
-            width: var(--sidebar-w); background-color: var(--surface); border-right: 1px solid var(--border);
-            position: fixed; height: 100vh; left: 0; top: 0; display: flex; flex-direction: column;
-            transition: var(--transition); z-index: 50;
+            width: var(--sidebar-w);
+            background-color: var(--surface);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            z-index: 50;
         }
-        .sidebar-header { padding: 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
-        .brand { display: flex; align-items: center; gap: 12px; }
-        .brand-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), #818cf8); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
-        .brand-text { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.5px; color: var(--text-main); }
-        .sidebar-nav { padding: 24px 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
-        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); color: var(--text-muted); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
-        .nav-item:hover { background-color: var(--primary-light); color: var(--primary); transform: translateX(4px); }
-        .nav-item.active { background-color: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
-        .nav-icon { font-size: 1.2rem; width: 24px; text-align: center; }
-        
+
+        .sidebar-header {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #818cf8);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .brand-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .sidebar-nav {
+            padding: 24px 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
         /* Main Content */
-        .main-content { flex: 1; margin-left: var(--sidebar-w); display: flex; flex-direction: column; transition: var(--transition); width: calc(100% - var(--sidebar-w)); }
-        
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-w);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            width: calc(100% - var(--sidebar-w));
+        }
+
         /* Header */
-        .top-header { background-color: rgba(var(--surface), 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 40; }
-        .header-left { display: flex; align-items: center; gap: 16px; }
-        .mobile-toggle { display: none; font-size: 1.5rem; color: var(--text-main); }
-        .page-title-text { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin: 0; }
-        
-        .header-right { display: flex; align-items: center; gap: 20px; }
-        .action-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); background-color: var(--background); transition: var(--transition); border: 1px solid var(--border); }
-        .action-btn:hover { color: var(--primary); border-color: var(--primary); transform: rotate(15deg); }
-        
-        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 4px 12px 4px 4px; border-radius: var(--radius-full); border: 1px solid var(--border); transition: var(--transition); }
-        .user-profile:hover { background-color: var(--background); }
-        .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
-        .user-info { display: flex; flex-direction: column; }
-        .user-name { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
-        .user-role { font-size: 0.75rem; color: var(--text-muted); }
-        
+        .top-header {
+            background-color: rgba(var(--surface), 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .page-title-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            background-color: var(--background);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .action-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: rotate(15deg);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 4px 12px 4px 4px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .user-profile:hover {
+            background-color: var(--background);
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
         /* Dashboard Content */
-        .dashboard-body { padding: 32px; display: flex; flex-direction: column; gap: 32px; }
-        
+        .dashboard-body {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
         /* Toolbar */
         .action-toolbar {
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 16px; background: var(--surface); padding: 20px 24px;
-            border-radius: var(--radius-md); border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            background: var(--surface);
+            padding: 20px 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
         }
-        
-        .search-box { position: relative; flex: 1; max-width: 400px; }
-        .search-box input {
-            width: 100%; padding: 12px 16px 12px 42px; border-radius: var(--radius-full);
-            border: 1px solid var(--border); background-color: var(--background); color: var(--text-main);
-            font-size: 0.95rem; transition: var(--transition);
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
         }
-        .search-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
-        .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-        
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border);
+            background-color: var(--background);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
         .btn-add {
             background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-            color: white; padding: 12px 24px; border-radius: var(--radius-full);
-            font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;
-            transition: var(--transition); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
         }
-        .btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3); }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+        }
 
         /* Unit Grid */
-        .unit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-        
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
         .unit-card {
-            background: var(--surface); border-radius: var(--radius-lg); padding: 24px;
-            border: 1px solid var(--border); box-shadow: var(--shadow-sm);
-            transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between;
-            position: relative; overflow: hidden;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .unit-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--primary-light); }
-        
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .device-info h4 { color: var(--text-main); font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
-        .device-id { font-size: 0.8rem; color: var(--text-muted); font-family: monospace; background: var(--background); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
-        
-        .badge { padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        .badge.done { background-color: var(--success-bg); color: var(--success); }
-        .badge.process { background-color: var(--warning-bg); color: var(--warning); }
-        
-        .card-body p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        
+
+        .unit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .device-info h4 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .device-id {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: monospace;
+            background: var(--background);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.done {
+            background-color: var(--success-bg);
+            color: var(--success);
+        }
+
+        .badge.process {
+            background-color: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .card-body p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
         .card-footer {
-            border-top: 1px dashed var(--border); padding-top: 16px;
-            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px dashed var(--border);
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .reporter-info { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
-        .reporter-info i { color: var(--primary); }
-        
+
+        .reporter-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .reporter-info i {
+            color: var(--primary);
+        }
+
         .action-link {
-            color: var(--primary); font-weight: 600; font-size: 0.9rem;
-            display: flex; align-items: center; gap: 6px; transition: var(--transition);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
         }
-        .action-link:hover { color: var(--primary-hover); transform: translateX(3px); }
+
+        .action-link:hover {
+            color: var(--primary-hover);
+            transform: translateX(3px);
+        }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.active { transform: translateX(0); box-shadow: var(--shadow-lg); }
-            .main-content { margin-left: 0; width: 100%; }
-            .mobile-toggle { display: block; }
-            .dashboard-body { padding: 20px; }
-            .top-header { padding: 16px 20px; }
-            .action-toolbar { flex-direction: column; align-items: stretch; }
-            .search-box { max-width: 100%; }
-            .btn-add { justify-content: center; }
-            .page-title-text { display: none; }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .dashboard-body {
+                padding: 20px;
+            }
+
+            .top-header {
+                padding: 16px 20px;
+            }
+
+            .action-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .btn-add {
+                justify-content: center;
+            }
+
+            .page-title-text {
+                display: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="app-layout">
-        
+
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -195,11 +543,13 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <ul class="sidebar-nav">
                 <li><a href="index.html" class="nav-item"><i class="fas fa-home nav-icon"></i> Overview</a></li>
-                <li><a href="dataunit.html" class="nav-item active"><i class="fas fa-desktop nav-icon"></i> Data Unit</a></li>
-                <li><a href="pengajuan.html" class="nav-item"><i class="fas fa-box-open nav-icon"></i> Pengajuan Barang</a></li>
+                <li><a href="dataunit.html" class="nav-item active"><i class="fas fa-desktop nav-icon"></i> Data
+                        Unit</a></li>
+                <li><a href="pengajuan.html" class="nav-item"><i class="fas fa-box-open nav-icon"></i> Pengajuan
+                        Barang</a></li>
                 <li><a href="lihat_data.html" class="nav-item"><i class="fas fa-table nav-icon"></i> Semua Data</a></li>
                 <li><a href="utility.html" class="nav-item"><i class="fas fa-tools nav-icon"></i> Utility IT</a></li>
             </ul>
@@ -207,7 +557,7 @@
 
         <!-- MAIN CONTENT -->
         <main class="main-content">
-            
+
             <!-- HEADER -->
             <header class="top-header">
                 <div class="header-left">
@@ -216,16 +566,17 @@
                     </button>
                     <h2 class="page-title-text">Laporan Data Unit</h2>
                 </div>
-                
+
                 <div class="header-right">
                     <button class="action-btn" onclick="toggleTheme()" title="Toggle Dark Mode">
                         <i class="fas fa-moon" id="themeIcon"></i>
                     </button>
                     <div class="user-profile">
-                        <img src="dedi.jpg" alt="User" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Admin+IT&background=4f46e5&color=fff'">
+                        <img src="dedi.jpg" alt="User" class="avatar"
+                            onerror="this.src='https://ui-avatars.com/api/?name=Admin+IT&background=4f46e5&color=fff'">
                         <div class="user-info">
                             <span class="user-name">Admin IT</span>
-                            <span class="user-role">IT Support</span>
+                            <span class="user-role">IT HM Karangasem</span>
                         </div>
                     </div>
                 </div>
@@ -233,7 +584,7 @@
 
             <!-- DASHBOARD CONTENT -->
             <div class="dashboard-body">
-                
+
                 <section class="action-toolbar">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
@@ -245,7 +596,7 @@
                 </section>
 
                 <section class="unit-grid" id="cardContainer">
-                    
+
                     <div class="unit-card">
                         <div class="card-header">
                             <div class="device-info">
@@ -255,13 +606,15 @@
                             <span class="badge done">Selesai</span>
                         </div>
                         <div class="card-body">
-                            <p><strong>About:</strong> Laporan data unit komprehensif untuk tahun 2024 yang mencakup seluruh pemeliharaan unit di Klinik Hasna Medika.</p>
+                            <p><strong>About:</strong> Laporan data unit komprehensif untuk tahun 2024 yang mencakup
+                                seluruh pemeliharaan unit di Klinik Hasna Medika.</p>
                         </div>
                         <div class="card-footer">
                             <div class="reporter-info">
                                 <i class="far fa-calendar-alt"></i> Mar - Des 2024
                             </div>
-                            <a href="https://docs.google.com/spreadsheets/d/1raV7GICONMX05pS_YqCXDL4_EFiP84FaPI3eJeYiKxE/edit?gid=203598211#gid=203598211" target="_blank" class="action-link">Lihat Detail <i class="fas fa-arrow-right"></i></a>
+                            <a href="https://docs.google.com/spreadsheets/d/1raV7GICONMX05pS_YqCXDL4_EFiP84FaPI3eJeYiKxE/edit?gid=203598211#gid=203598211"
+                                target="_blank" class="action-link">Lihat Detail <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
 
@@ -274,13 +627,15 @@
                             <span class="badge done">Selesai</span>
                         </div>
                         <div class="card-body">
-                            <p><strong>About:</strong> Laporan data unit komprehensif untuk tahun 2025 yang mencakup seluruh pemeliharaan unit di Klinik Hasna Medika.</p>
+                            <p><strong>About:</strong> Laporan data unit komprehensif untuk tahun 2025 yang mencakup
+                                seluruh pemeliharaan unit di Klinik Hasna Medika.</p>
                         </div>
                         <div class="card-footer">
                             <div class="reporter-info">
                                 <i class="far fa-calendar-alt"></i> Jan - Des 2025
                             </div>
-                            <a href="https://docs.google.com/spreadsheets/d/19FCKjhrsuxiTd-2U_yPqr9rG_Hs35sBy4K1fMTQbgCU/edit?usp=sharing" target="_blank" class="action-link">Lihat Detail <i class="fas fa-arrow-right"></i></a>
+                            <a href="https://docs.google.com/spreadsheets/d/19FCKjhrsuxiTd-2U_yPqr9rG_Hs35sBy4K1fMTQbgCU/edit?usp=sharing"
+                                target="_blank" class="action-link">Lihat Detail <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
 
@@ -293,13 +648,15 @@
                             <span class="badge process">Process</span>
                         </div>
                         <div class="card-body">
-                            <p><strong>About:</strong> Laporan data unit berjalan untuk tahun 2026 yang mencakup seluruh pemeliharaan unit di Klinik Hasna Medika.</p>
+                            <p><strong>About:</strong> Laporan data unit berjalan untuk tahun 2026 yang mencakup seluruh
+                                pemeliharaan unit di Klinik Hasna Medika.</p>
                         </div>
                         <div class="card-footer">
                             <div class="reporter-info">
                                 <i class="far fa-calendar-alt"></i> Jan - Des 2026
                             </div>
-                            <a href="https://docs.google.com/spreadsheets/d/1LaSgNxCTFuuSCTDvFSUbvNl9lyN1smNXrV9oPF-QD3o/edit?usp=sharing" target="_blank" class="action-link">Lihat Detail <i class="fas fa-arrow-right"></i></a>
+                            <a href="https://docs.google.com/spreadsheets/d/1LaSgNxCTFuuSCTDvFSUbvNl9lyN1smNXrV9oPF-QD3o/edit?usp=sharing"
+                                target="_blank" class="action-link">Lihat Detail <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
 
@@ -324,7 +681,7 @@
                 localStorage.setItem('theme', 'light');
             }
         }
-        
+
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
             document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
@@ -348,7 +705,7 @@
                 let title = cards[i].querySelector('h4').innerText.toLowerCase();
                 let desc = cards[i].querySelector('p').innerText.toLowerCase();
                 let id = cards[i].querySelector('.device-id').innerText.toLowerCase();
-                
+
                 if (title.includes(input) || desc.includes(input) || id.includes(input)) {
                     cards[i].style.display = "flex";
                 } else {
@@ -358,4 +715,5 @@
         }
     </script>
 </body>
+
 </html>

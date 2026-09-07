@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Procurement Dashboard</title>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- SweetAlert2 -->
@@ -22,7 +24,7 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border: #e2e8f0;
-            
+
             /* Status Colors */
             --success: #10b981;
             --success-bg: #d1fae5;
@@ -40,12 +42,12 @@
             --radius-md: 12px;
             --radius-lg: 20px;
             --radius-full: 9999px;
-            
+
             /* Shadows */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            
+
             /* Transitions */
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -59,7 +61,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border: #334155;
-            
+
             --success-bg: rgba(16, 185, 129, 0.2);
             --warning-bg: rgba(245, 158, 11, 0.2);
             --danger-bg: rgba(239, 68, 68, 0.2);
@@ -67,15 +69,42 @@
         }
 
         /* --- RESET & BASE --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--background); color: var(--text-main); transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; }
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        button { cursor: pointer; border: none; background: none; font-family: inherit; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
         /* --- LAYOUT --- */
-        .app-layout { display: flex; min-height: 100vh; }
-        
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
         /* --- SIDEBAR --- */
         .sidebar {
             width: var(--sidebar-w);
@@ -83,68 +112,128 @@
             border-right: 1px solid var(--border);
             position: fixed;
             height: 100vh;
-            left: 0; top: 0;
-            display: flex; flex-direction: column;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
             transition: var(--transition);
             z-index: 50;
         }
-        
+
         .sidebar-header {
             padding: 24px;
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             border-bottom: 1px solid var(--border);
         }
-        
-        .brand { display: flex; align-items: center; gap: 12px; }
-        .brand-icon { 
-            width: 40px; height: 40px; 
-            background: linear-gradient(135deg, var(--primary), #818cf8); 
-            border-radius: var(--radius-md); 
-            display: flex; align-items: center; justify-content: center; 
-            color: white; font-size: 1.2rem;
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #818cf8);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
-        .brand-text { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.5px; color: var(--text-main); }
-        
-        .sidebar-nav { padding: 24px 16px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+
+        .brand-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .sidebar-nav {
+            padding: 24px 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
         .nav-item {
-            display: flex; align-items: center; gap: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             padding: 12px 16px;
             border-radius: var(--radius-md);
             color: var(--text-muted);
-            font-weight: 600; font-size: 0.95rem;
+            font-weight: 600;
+            font-size: 0.95rem;
             transition: var(--transition);
         }
-        .nav-item:hover { background-color: var(--primary-light); color: var(--primary); transform: translateX(4px); }
-        .nav-item.active { background-color: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
-        .nav-icon { font-size: 1.2rem; width: 24px; text-align: center; }
-        
+
+        .nav-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
         /* --- MAIN CONTENT --- */
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-w);
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
             transition: var(--transition);
             width: calc(100% - var(--sidebar-w));
         }
-        
+
         /* --- HEADER --- */
         .top-header {
             background-color: rgba(var(--surface), 0.8);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
             padding: 16px 32px;
-            display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 40;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 40;
         }
-        
-        .header-left { display: flex; align-items: center; gap: 16px; }
-        .mobile-toggle { display: none; font-size: 1.5rem; color: var(--text-main); }
-        
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+        }
+
         .search-bar {
             position: relative;
             width: 300px;
         }
+
         .search-bar input {
             width: 100%;
             padding: 10px 16px 10px 42px;
@@ -155,78 +244,219 @@
             font-size: 0.95rem;
             transition: var(--transition);
         }
-        .search-bar input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
-        .search-bar i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-        
-        .header-right { display: flex; align-items: center; gap: 20px; }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .action-btn {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--text-muted);
             background-color: var(--background);
             transition: var(--transition);
             border: 1px solid var(--border);
         }
-        .action-btn:hover { color: var(--primary); border-color: var(--primary); transform: rotate(15deg); }
-        
-        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 4px 12px 4px 4px; border-radius: var(--radius-full); border: 1px solid var(--border); transition: var(--transition); }
-        .user-profile:hover { background-color: var(--background); }
-        .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
-        .user-info { display: flex; flex-direction: column; }
-        .user-name { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
-        .user-role { font-size: 0.75rem; color: var(--text-muted); }
-        
+
+        .action-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: rotate(15deg);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 4px 12px 4px 4px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .user-profile:hover {
+            background-color: var(--background);
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
         /* --- DASHBOARD CONTENT --- */
-        .dashboard-body { padding: 32px; display: flex; flex-direction: column; gap: 32px; }
-        
+        .dashboard-body {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
         /* Welcome Banner */
         .welcome-banner {
             background: linear-gradient(135deg, var(--primary), #818cf8);
             border-radius: var(--radius-lg);
             padding: 32px;
             color: white;
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: var(--shadow-lg);
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: hidden;
         }
-        .welcome-content { position: relative; z-index: 2; }
-        .welcome-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
-        .welcome-desc { font-size: 1rem; opacity: 0.9; max-width: 500px; line-height: 1.5; }
-        .welcome-illustration { position: absolute; right: 0; bottom: 0; height: 120%; opacity: 0.2; transform: translateY(10%) translateX(10%); pointer-events: none; }
-        
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .welcome-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        .welcome-illustration {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 120%;
+            opacity: 0.2;
+            transform: translateY(10%) translateX(10%);
+            pointer-events: none;
+        }
+
         /* Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
         .stat-card {
             background-color: var(--surface);
             border-radius: var(--radius-md);
             padding: 24px;
             border: 1px solid var(--border);
-            display: flex; align-items: center; gap: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: hidden;
         }
-        .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary-light); }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
         .stat-icon {
-            width: 56px; height: 56px;
+            width: 56px;
+            height: 56px;
             border-radius: var(--radius-md);
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.5rem;
         }
-        .stat-info { display: flex; flex-direction: column; }
-        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--text-main); line-height: 1.2; }
-        .stat-label { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
-        
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
         /* Custom Colors for Stats */
-        .stat-card.primary .stat-icon { background-color: var(--primary-light); color: var(--primary); }
-        .stat-card.warning .stat-icon { background-color: var(--warning-bg); color: var(--warning); }
-        .stat-card.danger .stat-icon { background-color: var(--danger-bg); color: var(--danger); }
-        .stat-card.success .stat-icon { background-color: var(--success-bg); color: var(--success); }
-        
+        .stat-card.primary .stat-icon {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .stat-card.warning .stat-icon {
+            background-color: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .stat-card.danger .stat-icon {
+            background-color: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        .stat-card.success .stat-icon {
+            background-color: var(--success-bg);
+            color: var(--success);
+        }
+
         /* Grid Layout for Form and Table */
-        .content-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 32px; align-items: start; }
-        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 32px;
+            align-items: start;
+        }
+
         /* --- MODERN FORM --- */
         .card {
             background-color: var(--surface);
@@ -235,137 +465,352 @@
             box-shadow: var(--shadow-md);
             overflow: hidden;
         }
-        .card-header { padding: 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .card-title { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px; color: var(--text-main); }
-        .card-body { padding: 24px; }
-        
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
-        .form-label.optional { color: var(--text-muted); font-weight: 500; font-size: 0.8rem; }
-        
-        .input-group { position: relative; }
-        .input-icon { position: absolute; left: 16px; top: 14px; color: var(--text-muted); transition: var(--transition); }
+
+        .card-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .form-label.optional {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
         .form-control {
             width: 100%;
             padding: 12px 16px 12px 45px;
             background-color: var(--background);
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
-            font-size: 0.95rem; color: var(--text-main);
+            font-size: 0.95rem;
+            color: var(--text-main);
             transition: var(--transition);
         }
-        .form-control:focus { outline: none; border-color: var(--primary); background-color: var(--surface); box-shadow: 0 0 0 3px var(--primary-light); }
-        .form-control:focus + .input-icon, .input-group:focus-within .input-icon { color: var(--primary); }
-        textarea.form-control { min-height: 100px; resize: vertical; }
-        select.form-control { appearance: none; cursor: pointer; }
-        .select-arrow { position: absolute; right: 16px; top: 14px; color: var(--text-muted); pointer-events: none; }
-        
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: var(--surface);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .form-control:focus+.input-icon,
+        .input-group:focus-within .input-icon {
+            color: var(--primary);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        select.form-control {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 16px;
+            top: 14px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
         .btn-submit {
             width: 100%;
             background: linear-gradient(135deg, var(--primary), var(--primary-hover));
             color: white;
             padding: 14px;
             border-radius: var(--radius-md);
-            font-size: 1rem; font-weight: 600;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
             transition: var(--transition);
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3); }
-        .btn-submit:active { transform: translateY(0); }
-        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-        
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* --- MODERN TABLE --- */
-        .table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .table-responsive { overflow-x: auto; margin: 0 -24px; padding: 0 24px; }
-        .modern-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 0 -24px;
+            padding: 0 24px;
+        }
+
+        .modern-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
         .modern-table th {
-            padding: 16px; text-align: left;
-            font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 16px;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             border-bottom: 1px solid var(--border);
             white-space: nowrap;
         }
+
         .modern-table td {
             padding: 16px;
-            font-size: 0.95rem; color: var(--text-main);
+            font-size: 0.95rem;
+            color: var(--text-main);
             border-bottom: 1px solid var(--border);
             vertical-align: middle;
         }
-        .modern-table tr { transition: var(--transition); }
-        .modern-table tbody tr:hover { background-color: rgba(var(--primary), 0.02); }
-        .modern-table tbody tr:last-child td { border-bottom: none; }
-        
+
+        .modern-table tr {
+            transition: var(--transition);
+        }
+
+        .modern-table tbody tr:hover {
+            background-color: rgba(var(--primary), 0.02);
+        }
+
+        .modern-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
         .badge {
-            padding: 6px 12px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700;
-            display: inline-flex; align-items: center; gap: 6px; letter-spacing: 0.3px; text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
         }
-        .badge.urgent { background-color: var(--danger-bg); color: var(--danger); }
-        .badge.sedang { background-color: var(--warning-bg); color: var(--warning); }
-        .badge.rendah { background-color: var(--info-bg); color: var(--info); }
-        
+
+        .badge.urgent {
+            background-color: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        .badge.sedang {
+            background-color: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .badge.rendah {
+            background-color: var(--info-bg);
+            color: var(--info);
+        }
+
         .empty-state {
-            padding: 40px 20px; text-align: center;
-            display: flex; flex-direction: column; align-items: center; gap: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
         }
-        .empty-icon { font-size: 3rem; color: var(--border); }
-        .empty-text { font-size: 1.1rem; font-weight: 600; color: var(--text-muted); }
-        
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--border);
+        }
+
+        .empty-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
         /* --- SPINNER --- */
         .loader {
-            border: 3px solid rgba(255,255,255,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top: 3px solid white;
-            width: 20px; height: 20px;
+            width: 20px;
+            height: 20px;
             animation: spin 1s linear infinite;
             display: none;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .table-loader {
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 40px; color: var(--text-muted); gap: 16px;
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
+
+        .table-loader {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            color: var(--text-muted);
+            gap: 16px;
+        }
+
         .table-loader .spinner {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border: 4px solid var(--border);
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        
+
         /* --- FLOATING CRITICISM BUTTON --- */
         .fab-kritik {
-            position: fixed; bottom: 30px; right: 30px;
-            background: var(--surface); border: 1px solid var(--border);
-            padding: 12px 20px; border-radius: var(--radius-full);
-            display: flex; align-items: center; gap: 10px;
-            box-shadow: var(--shadow-lg); font-weight: 600; color: var(--text-main);
-            transition: var(--transition); cursor: pointer; z-index: 90;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-lg);
+            font-weight: 600;
+            color: var(--text-main);
+            transition: var(--transition);
+            cursor: pointer;
+            z-index: 90;
         }
-        .fab-kritik:hover { transform: translateY(-5px); border-color: var(--primary); color: var(--primary); }
-        .fab-kritik i { color: var(--warning); font-size: 1.2rem; }
+
+        .fab-kritik:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .fab-kritik i {
+            color: var(--warning);
+            font-size: 1.2rem;
+        }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
-            .content-grid { grid-template-columns: 1fr; }
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
         }
+
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.active { transform: translateX(0); box-shadow: var(--shadow-lg); }
-            .main-content { margin-left: 0; width: 100%; }
-            .mobile-toggle { display: block; }
-            .search-bar { display: none; }
-            .dashboard-body { padding: 20px; }
-            .top-header { padding: 16px 20px; }
-            .fab-kritik { bottom: 20px; right: 20px; }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .search-bar {
+                display: none;
+            }
+
+            .dashboard-body {
+                padding: 20px;
+            }
+
+            .top-header {
+                padding: 16px 20px;
+            }
+
+            .fab-kritik {
+                bottom: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="app-layout">
-        
+
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -377,11 +822,12 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <ul class="sidebar-nav">
                 <li><a href="index.html" class="nav-item"><i class="fas fa-home nav-icon"></i> Overview</a></li>
                 <li><a href="dataunit.html" class="nav-item"><i class="fas fa-desktop nav-icon"></i> Data Unit</a></li>
-                <li><a href="pengajuan.html" class="nav-item active"><i class="fas fa-box-open nav-icon"></i> Pengajuan Barang</a></li>
+                <li><a href="pengajuan.html" class="nav-item active"><i class="fas fa-box-open nav-icon"></i> Pengajuan
+                        Barang</a></li>
                 <li><a href="lihat_data.html" class="nav-item"><i class="fas fa-table nav-icon"></i> Semua Data</a></li>
                 <li><a href="utility.html" class="nav-item"><i class="fas fa-tools nav-icon"></i> Utility IT</a></li>
             </ul>
@@ -389,7 +835,7 @@
 
         <!-- MAIN CONTENT -->
         <main class="main-content">
-            
+
             <!-- HEADER -->
             <header class="top-header">
                 <div class="header-left">
@@ -398,10 +844,11 @@
                     </button>
                     <div class="search-bar">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Cari data pengajuan..." id="globalSearch" onkeyup="filterTable()">
+                        <input type="text" placeholder="Cari data pengajuan..." id="globalSearch"
+                            onkeyup="filterTable()">
                     </div>
                 </div>
-                
+
                 <div class="header-right">
                     <button class="action-btn" onclick="toggleTheme()" title="Toggle Dark Mode">
                         <i class="fas fa-moon" id="themeIcon"></i>
@@ -410,10 +857,11 @@
                         <i class="fas fa-bell"></i>
                     </button>
                     <div class="user-profile">
-                        <img src="dedi.jpg" alt="User" class="avatar" onerror="this.src='https://ui-avatars.com/api/?name=Admin+IT&background=4f46e5&color=fff'">
+                        <img src="dedi.jpg" alt="User" class="avatar"
+                            onerror="this.src='https://ui-avatars.com/api/?name=Admin+IT&background=4f46e5&color=fff'">
                         <div class="user-info">
                             <span class="user-name">Admin IT</span>
-                            <span class="user-role">IT Support</span>
+                            <span class="user-role">IT HM Karangasem</span>
                         </div>
                     </div>
                 </div>
@@ -421,16 +869,17 @@
 
             <!-- DASHBOARD CONTENT -->
             <div class="dashboard-body">
-                
+
                 <!-- Welcome Banner -->
                 <div class="welcome-banner">
                     <div class="welcome-content">
                         <h1 class="welcome-title">Portal Pengajuan Barang</h1>
-                        <p class="welcome-desc">Kelola dan ajukan kebutuhan perangkat keras, ATK, dan perlengkapan IT lainnya dengan cepat dan terorganisir.</p>
+                        <p class="welcome-desc">Kelola dan ajukan kebutuhan perangkat keras, ATK, dan perlengkapan IT
+                            lainnya dengan cepat dan terorganisir.</p>
                     </div>
                     <i class="fas fa-boxes welcome-illustration" style="font-size: 8rem;"></i>
                 </div>
-                
+
                 <!-- Stats Grid -->
                 <div class="stats-grid">
                     <div class="stat-card primary">
@@ -465,7 +914,7 @@
 
                 <!-- Grid Layout for Form and Table -->
                 <div class="content-grid">
-                    
+
                     <!-- Form Pengajuan -->
                     <div class="card">
                         <div class="card-header">
@@ -477,7 +926,8 @@
                                     <label class="form-label">Nama Pemohon</label>
                                     <div class="input-group">
                                         <i class="fas fa-user input-icon"></i>
-                                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama lengkap" required>
+                                        <input type="text" name="nama" class="form-control"
+                                            placeholder="Masukkan nama lengkap" required>
                                     </div>
                                 </div>
 
@@ -485,7 +935,8 @@
                                     <label class="form-label">Divisi / Unit</label>
                                     <div class="input-group">
                                         <i class="fas fa-building input-icon"></i>
-                                        <input type="text" name="divisi" class="form-control" placeholder="Contoh: Keuangan, HRD, dll." required>
+                                        <input type="text" name="divisi" class="form-control"
+                                            placeholder="Contoh: Keuangan, HRD, dll." required>
                                     </div>
                                 </div>
 
@@ -493,7 +944,8 @@
                                     <label class="form-label">Nama Barang / Spesifikasi</label>
                                     <div class="input-group">
                                         <i class="fas fa-laptop input-icon"></i>
-                                        <input type="text" name="barang" class="form-control" placeholder="Contoh: Mouse Wireless Logitech" required>
+                                        <input type="text" name="barang" class="form-control"
+                                            placeholder="Contoh: Mouse Wireless Logitech" required>
                                     </div>
                                 </div>
 
@@ -502,10 +954,11 @@
                                         <label class="form-label">Jumlah</label>
                                         <div class="input-group">
                                             <i class="fas fa-hashtag input-icon"></i>
-                                            <input type="number" name="jumlah" class="form-control" placeholder="0" min="1" required>
+                                            <input type="number" name="jumlah" class="form-control" placeholder="0"
+                                                min="1" required>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label class="form-label">Prioritas</label>
                                         <div class="input-group">
@@ -525,16 +978,19 @@
                                     <label class="form-label">Keterangan / Alasan</label>
                                     <div class="input-group">
                                         <i class="fas fa-align-left input-icon"></i>
-                                        <textarea name="keterangan" class="form-control" placeholder="Jelaskan kebutuhan secara detail..." required></textarea>
+                                        <textarea name="keterangan" class="form-control"
+                                            placeholder="Jelaskan kebutuhan secara detail..." required></textarea>
                                     </div>
                                 </div>
 
                                 <!-- Field Saran dipertahankan namun dibuat lebih rapi -->
                                 <div class="form-group" id="saranField" style="display: none;">
-                                    <label class="form-label">Kritik & Saran <span class="optional">(Opsional)</span></label>
+                                    <label class="form-label">Kritik & Saran <span
+                                            class="optional">(Opsional)</span></label>
                                     <div class="input-group">
                                         <i class="fas fa-comment-dots input-icon"></i>
-                                        <textarea name="saran" class="form-control" placeholder="Beri masukan untuk sistem ini..."></textarea>
+                                        <textarea name="saran" class="form-control"
+                                            placeholder="Beri masukan untuk sistem ini..."></textarea>
                                     </div>
                                 </div>
 
@@ -551,10 +1007,11 @@
                     <div class="card">
                         <div class="card-header">
                             <h2 class="card-title"><i class="fas fa-history text-primary"></i> Pengajuan Terbaru</h2>
-                            <button class="action-btn" onclick="fetchData()" title="Refresh Data"><i class="fas fa-sync-alt"></i></button>
+                            <button class="action-btn" onclick="fetchData()" title="Refresh Data"><i
+                                    class="fas fa-sync-alt"></i></button>
                         </div>
                         <div class="card-body" style="padding: 0;">
-                            
+
                             <div id="tableLoader" class="table-loader">
                                 <div class="spinner"></div>
                                 <p>Memuat data terbaru...</p>
@@ -580,9 +1037,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            
+
                             <div style="padding: 16px 24px; border-top: 1px solid var(--border); text-align: center;">
-                                <a href="lihat_data.html" style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">Lihat Semua Data <i class="fas fa-arrow-right" style="margin-left: 5px;"></i></a>
+                                <a href="lihat_data.html"
+                                    style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">Lihat Semua Data
+                                    <i class="fas fa-arrow-right" style="margin-left: 5px;"></i></a>
                             </div>
 
                         </div>
@@ -613,7 +1072,7 @@
                 localStorage.setItem('theme', 'light');
             }
         }
-        
+
         // Load saved theme
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
@@ -623,7 +1082,7 @@
         // --- SIDEBAR TOGGLE ---
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
-            
+
             // Adjust mobile close button
             const closeBtn = document.getElementById('closeSidebarBtn');
             if (window.innerWidth <= 768) {
@@ -653,20 +1112,20 @@
 
         form.addEventListener('submit', e => {
             e.preventDefault();
-            
+
             // Loading State UI
             btnSubmit.disabled = true;
             btnText.innerText = 'Mengirim...';
             btnIcon.style.display = 'none';
             btnLoader.style.display = 'block';
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
                 .then(response => {
                     // Reset UI
                     resetBtnState();
                     form.reset();
                     document.getElementById('saranField').style.display = 'none'; // hide saran again
-                    
+
                     // Success Notification
                     Swal.fire({
                         icon: 'success',
@@ -677,7 +1136,7 @@
                         color: 'var(--text-main)',
                         customClass: { popup: 'rounded-xl' }
                     });
-                    
+
                     // Refresh Dashboard Data
                     fetchData();
                 })
@@ -718,19 +1177,19 @@
                 // Use the exact same endpoint from lihat_data.html
                 const response = await fetch(scriptURL + '?action=read');
                 const result = await response.json();
-                
+
                 tableLoader.style.display = 'none';
 
                 if (result.status === 'success' && result.data.length > 0) {
                     tableContainer.style.display = 'block';
-                    
+
                     // Parse data
                     const dataTerbaru = result.data.reverse();
-                    
+
                     // UPDATE STATS CARD
                     document.getElementById('statTotal').innerText = dataTerbaru.length;
                     document.getElementById('statSelesai').innerText = "Online";
-                    
+
                     let urgentCount = 0;
                     let sedangCount = 0;
 
@@ -742,24 +1201,24 @@
                         if (prio.includes('tinggi') || prio.includes('urgent')) urgentCount++;
                         if (prio.includes('sedang')) sedangCount++;
                     });
-                    
+
                     document.getElementById('statUrgent').innerText = urgentCount;
                     document.getElementById('statSedang').innerText = sedangCount;
 
                     // RENDER TABLE ROWS
                     limitedData.forEach(item => {
                         const tr = document.createElement('tr');
-                        
-                        let dateStr = item.timestamp ? new Date(item.timestamp).toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'}) : '-';
-                        
+
+                        let dateStr = item.timestamp ? new Date(item.timestamp).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) : '-';
+
                         // Badge formatting
                         let badgeClass = 'rendah';
                         let prioText = item.prioritas || 'Rendah';
                         const prioLower = prioText.toLowerCase();
-                        
-                        if(prioLower.includes('tinggi') || prioLower.includes('urgent')) {
+
+                        if (prioLower.includes('tinggi') || prioLower.includes('urgent')) {
                             badgeClass = 'urgent'; prioText = 'Tinggi';
-                        } else if(prioLower.includes('sedang')) {
+                        } else if (prioLower.includes('sedang')) {
                             badgeClass = 'sedang'; prioText = 'Sedang';
                         } else {
                             badgeClass = 'rendah'; prioText = 'Rendah';
@@ -778,7 +1237,7 @@
                                 <div style="font-size: 0.75rem; color: var(--text-muted);">Jml: ${item.jumlah || '0'}</div>
                             </td>
                             <td>
-                                <span class="badge ${badgeClass}"><i class="fas ${badgeClass === 'urgent' ? 'fa-fire' : (badgeClass==='sedang' ? 'fa-clock' : 'fa-info-circle')}"></i> ${prioText}</span>
+                                <span class="badge ${badgeClass}"><i class="fas ${badgeClass === 'urgent' ? 'fa-fire' : (badgeClass === 'sedang' ? 'fa-clock' : 'fa-info-circle')}"></i> ${prioText}</span>
                             </td>
                         `;
                         tbody.appendChild(tr);
@@ -809,17 +1268,17 @@
             for (let i = 1; i < tr.length; i++) {
                 let tdPemohon = tr[i].getElementsByTagName("td")[1];
                 let tdBarang = tr[i].getElementsByTagName("td")[2];
-                
+
                 if (tdPemohon || tdBarang) {
                     let textPemohon = tdPemohon.textContent || tdPemohon.innerText;
                     let textBarang = tdBarang.textContent || tdBarang.innerText;
-                    
+
                     if (textPemohon.toLowerCase().indexOf(filter) > -1 || textBarang.toLowerCase().indexOf(filter) > -1) {
                         tr[i].style.display = "";
                     } else {
                         tr[i].style.display = "none";
                     }
-                }       
+                }
             }
         }
 
@@ -828,4 +1287,5 @@
 
     </script>
 </body>
+
 </html>
